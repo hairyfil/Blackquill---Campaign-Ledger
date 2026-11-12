@@ -1,247 +1,135 @@
-BlackQuill v1.0.8
-================
 
-# BlackQuill Campaign Ledger v1.0.8
+BlackQuill Campaign Ledger
+A self-hosted campaign notebook for D&D and other tabletop RPGs.
 
-BlackQuill is a self-hosted, filesystem-based campaign ledger for tabletop RPGs.
+BlackQuill gives the DM and players one place to keep the world, the people in it, the factions, quests, loot and session logs. It runs on your own computer or server, needs no database, and stores every note as a plain Markdown file you own.
 
-Copyright © 2026 Phil Davidson. BlackQuill is open source under the MIT License. See [Licence](#licence) and the `LICENSE` file.
+ 
+ 
 
-## Accounts
+Features
+A ready-made campaign structure
+Ten sections out of the box: Adventure Groups (parties and PCs), Chronicle (session logs, party journal, discoveries, rumours, loot history), Atlas (from a whole world down to a single dwelling or site), Personae, Organisations, Armory, Codex, Quests, Session Archive, and House Rules and Rulings.
+Customisable menus: the DM can reorder sections, switch them on or off, and add subcategories.
+Many campaigns on one install, with a campaign switcher in the top bar.
+Dashboard
+A tile and entry count for every section.
+The latest session log, open quests and the most recently updated entries at a glance.
+Search across the whole campaign.
+Notes and linking
+Every entry is Markdown, shown on a parchment-style reader page.
+Wiki links: type [[ in a note and pick from matching campaign notes and SRD entries. Links look like [[Note Title]] or [[Note Title|shown text]].
+A DM can click a link to a note that does not exist yet to create it.
+Pictures per note, stored in the note's own folder.
+Forgotten Realms Wiki import: while you type a new entry's name, BlackQuill looks it up on the Forgotten Realms Wiki, suggests the closest article, and can import its text and pictures with the source link and licence kept on the note.
+Built-in SRD 5.1 browser
+Browse the D&D 5e System Reference Document 5.1: races, classes, spells, monsters, equipment, magic items, feats, backgrounds, conditions and rules.
+Filters where they matter: spells by level, class and school; monsters by challenge rating, type and size; magic items by rarity.
+Full monster stat blocks, spell details, class level tables and spell lists, with cross-links between entries.
+Link any SRD entry from a note, for example [[srd:spells/fireball|Fireball]].
+The SRD data is not bundled. A DM imports it once from the SRD page (see SRD data).
+The DM stays in control
+DM Eyes Only: a private section for story arcs, key story points and the DM's to-do list. The server never sends these notes to players.
+DM Secrets: a private secrets page attached to any note.
+House Rules and Rulings: everyone can read them, only the DM can change them.
+These rules are enforced by the server, not just hidden in the interface.
+Looks and layout
+Six built-in styles: Default, Parchment Day (light), Emerald Grove, Frost Arcane, Crimson Keep and Shadowfell, with a live-preview gallery.
+The DM's chosen style applies for everyone; players can pick their own for their browser.
+Custom styles, banners and icon packs can be added as files.
+Works on phones and tablets, with keyboard and screen-reader support.
+Accounts and administration
+Three roles: admin, DM and player, with one login page for everyone.
+First-run setup: you choose the admin password in the browser. There is no default admin password.
+Read-only demo account (demo / demo) that sees what a player sees and cannot change anything. The admin can change its password or lock it.
+Admin Console: user management, a file checker with safe repairs, backups of everything or a single campaign, data sets, and site settings.
+Copy notes from one campaign into another without overwriting anything.
+An audit log of admin and SRD actions.
+Quick start
+Requirements
+Node.js 22.12 or later (Node 24 LTS recommended).
+The built client (client/dist) is included, so there is nothing to build to run BlackQuill.
 
-First start:
+Windows
+Install Node.js.
+Download or clone this repository.
+Double-click install.bat (one time; it downloads the server's dependencies).
+Double-click runme.bat and leave its window open.
+Open http://localhost:3001 in your browser and choose the admin username and password.
+install.bat and runme.bat check your Node.js version first and tell you what to do if it is missing or too old. See INSTALL.txt for step-by-step instructions.
 
-There is no built-in admin password. The first time you open BlackQuill in a browser (with no admin account in `system/users.json`), it shows a **First-time setup** page where you choose the admin username (default `admin`) and password (at least 8 characters). After that the setup page is gone and everyone uses the normal login page.
-
-For Docker or other headless installs you can skip the page by setting `BLACKQUILL_ADMIN_PASSWORD` (and optionally `BLACKQUILL_ADMIN_USERNAME`) before the first start.
-
-Everyone signs in on the same login page. The admin account opens the Admin Console (users, file checker, data sets, backups, settings). DM and player accounts open the campaign list. There are no domains any more (removed in v0.84).
-
-Demo account (v0.86.4): BlackQuill also creates a read-only **demo** account, login `demo`, password `demo`. It sees what a player sees (all campaigns, player-visible notes, the SRD) but cannot add, change or delete anything; if it tries, a "blocked in demo mode" popup appears. The admin can change its password (User Management › Reset Password) or lock it, but cannot delete it. To let it see what a DM sees, change its role to dm in `system/users.json`; it stays read-only. If another account already uses the login `demo`, no demo account is created.
-
-## Licence
-
-BlackQuill is released under the MIT License. Copyright © 2026 Phil Davidson.
-
-You may use, copy, modify, merge, publish, distribute, sublicense and sell copies of BlackQuill, as long as the copyright notice and the licence text in `LICENSE` are kept with it. It comes with no warranty. The campaign notes and pictures you create are yours.
-
-Third-party material keeps its own licence: the open-source npm packages BlackQuill uses, and, if you import it, the SRD 5.1 (CC BY 4.0, Wizards of the Coast LLC) and the 5e-bits/5e-database data (MIT). BlackQuill no longer ships the SRD data itself.
-
-## Data location
-
-Persistent data lives outside the app folder:
-
-```text
-../blackquill-common-data/
-```
-
-Layout:
-
-```text
-blackquill-common-data/
-  system/                 everything that is not campaign content
-    users.json            all accounts: admin, dm, player
-    settings.json         banner, style, icon pack, debug
-    navigation.json       menu/category configuration
-    audit.log
-    templates/default/    intro.txt (login page text)
-    styles/               style .json files
-    icons/<pack>/         icon packs
-    images/banners/       banners and other general graphics
-    datasets/<dataset>/   reusable data sets to copy into a campaign
-    backups/              backups made from the Admin Console
-  campaigns/
-    campaigns.json        campaign index
-    <campaign-slug>/      one folder per campaign
-      campaign.json
-      notes/
-      sessions/
-      assets/
-```
-
-## Upgrading from v0.81 to v0.83.1
-
-v0.86.3 no longer converts the old (domains) data layout. Start v0.86.2 once against the old `blackquill-common-data` folder; it moves everything into the current layout and takes a backup first. Then switch to v0.86.3.
-
-## Install
-
-Needs Node.js 22.12 or later (Node 24 LTS recommended). For simple step-by-step instructions, see `INSTALL.txt`.
-
-The package comes with the app already built (`client/dist`), so installing only fetches the server's dependencies. There is nothing to build.
-
-```bash
+macOS and Linux
 npm install --omit=dev
 npm start
-```
+Then open http://localhost:3001.
+
+Docker
+docker compose up -d
+Campaign data is kept in ./blackquill-common-data on the host. To skip the browser setup page on a headless server, set BLACKQUILL_ADMIN_PASSWORD before the first start.
+
+Playing at the table
+Other people on the same network can open http://<this computer's IP address>:3001. On Windows, allow Node.js through the firewall on private networks when asked.
+
+First start: whoever opens BlackQuill first while no admin exists chooses the admin password. Do the first start yourself before letting anyone else reach the app.
+
+Getting started after install
+Sign in as the admin. The Admin Console opens.
+Create a DM account (the admin sees a hint for this on first sign-in).
+Sign in as the DM and create your first campaign.
+Create player accounts in the Admin Console for the people at your table.
+Optionally, open SRD in the sidebar and import the SRD data.
+SRD data
+BlackQuill does not ship the SRD data. A DM imports it once from the SRD page, in one of three ways:
+
+Download SRD 5.1 from GitHub: fetches the JSON files from 5e-bits/5e-database (needs internet).
+Upload JSON files: select the files from the 5e-database src/2014/en folder.
+Import from folder: put the files in blackquill-common-data/system/srd/import/ and import from there.
+The data is stored once and shared by every campaign. A DM can update or remove it later from the same page. Nothing else in BlackQuill needs the SRD.
+
+Your data
+BlackQuill keeps everything in a folder next to the app folder, not inside it:
+
+blackquill-common-data/
+  system/        accounts, settings, menus, styles, icons, banners, data sets, backups, SRD
+  campaigns/
+    <campaign>/  campaign.json, notes/, sessions/, assets/
+Notes are Markdown files with YAML front matter. You can read them, copy them, or keep them in version control.
+To upgrade, unpack the new version next to the same blackquill-common-data folder. Your campaigns are kept.
+Back up this folder to keep your campaigns safe, or use Backup / Restore in the Admin Console.
+The data folder is never part of this repository.
+Configuration
+Variable	Default	What it does
+PORT	3001	Port the server listens on.
+BLACKQUILL_DATA	../blackquill-common-data	Where campaign data, accounts and settings are stored.
+BLACKQUILL_ADMIN_PASSWORD	not set	Creates the admin account on first start, skipping the setup page (8+ characters).
+BLACKQUILL_ADMIN_USERNAME	admin	Admin username used with BLACKQUILL_ADMIN_PASSWORD.
+SESSION_SECRET	built-in development value	Secret used to sign login sessions. Set your own long random value on any install other people can reach.
+BLACKQUILL_DEBUG	off	Set to 1 to force debug mode, which logs each login attempt and more detail in the server window.
+Debug mode can also be turned on with runme-debug.bat or node server/index.js --debug.
+
+Password recovery
+You know the admin password: Admin Console > User Management > Change Password on the admin row.
+You forgot it: stop the server, open blackquill-common-data/system/users.json, delete the entry with "role": "admin", and start again. The first-time setup page appears so you can choose a new password. Other accounts are kept.
+Development
+server/        Express server and API
+client/src/    React client source
+client/dist/   Built client (committed, so users do not need to build)
+After changing anything in client/src, rebuild the client and commit the new client/dist:
+
+cd client
+npm ci
+npm run build
+For live reloading, run the BlackQuill server on port 3001 and then npm run dev in client/.
+
+release.txt lists what changed in each version.
+
+Licence
+BlackQuill is released under the MIT License. Copyright (c) 2026 Phil Davidson.
+
+The campaign notes and pictures you create are yours. Third-party material keeps its own licence:
+
+SRD 5.1: this work can include material taken from the System Reference Document 5.1 ("SRD 5.1") by Wizards of the Coast LLC, available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License.
+5e-database: SRD JSON data from 5e-bits/5e-database (MIT License).
+Forgotten Realms Wiki: imported article text is CC BY-SA 3.0; BlackQuill keeps the source and licence on each imported note. Imported pictures keep their own licences, and many are copyrighted artwork, so keep them for your own table.
+BlackQuill is not affiliated with Wizards of the Coast or Fandom.
 
-On Windows you can run:
-
-```text
-install.bat       (installs the server dependencies and applies npm audit fix)
-runme.bat         (starts BlackQuill)
-runme-debug.bat   (starts BlackQuill with debug mode forced on)
-```
-
-Debug mode can also be forced on from a command prompt with `runme.bat --debug`, `node server/index.js --debug`, or by setting `BLACKQUILL_DEBUG=1`. This overrides the saved admin setting, so it works even when you can't log in, and it logs each login attempt in the server window.
-
-Run install.bat again whenever you want to update dependencies.
-
-## Notes
-
-No database is required. Notes are Markdown files with YAML frontmatter. Note assets live beside their note file.
-
-
-## Admin Console
-
-After logging in as the admin, the admin console shows:
-
-- User Management: create/edit/lock/delete DM and player accounts (the admin account is protected)
-- File Checker: validate folder/note structure and run safe repairs
-- Data Sets: copy a data set from `system/datasets/` into a campaign, or copy one campaign's notes into another campaign (existing notes in the target are never overwritten)
-- Backup / Restore: back up all data or a single campaign into `system/backups/`
-- Settings: banner, style, icon pack and debug mode
-
-## Password recovery
-
-To change the admin password while you can still log in, use Admin Console › User Management › Change Password on the admin row (v1.0.2). If you have forgotten it:
-
-Stop the server, open `system/users.json` and delete the admin entry (the one with `"role": "admin"`). At the next start the First-time setup page appears again so you can choose a new admin password. Other users are kept.
-
-## SRD (System Reference Document)
-
-The sidebar has an **SRD** entry under Reference. The first time a DM opens it, BlackQuill offers to import the D&D 5e System Reference Document 5.1. Since v1.0.8 BlackQuill does not include the SRD data; the DM brings it in:
-
-- **Download SRD 5.1 from GitHub** fetches the JSON files from the 5e-bits/5e-database project (needs internet).
-- **Upload JSON files…** imports the files you already have (from https://github.com/5e-bits/5e-database, folder `src/2014/en`). Select all 25 files at once; `5e-SRD-Spells.json` and `Spells.json` style names both work.
-- **Import from folder** appears when the files are in `blackquill-common-data/system/srd/import/` (or `srd-data/5.1/` in the BlackQuill folder), for servers where uploading is awkward.
-
-Until a DM imports it, the SRD page shows these choices to DMs and tells players to ask their DM. Nothing else in BlackQuill needs the SRD.
-
-The data is stored once in `blackquill-common-data/system/srd/` and every campaign can browse it. After import, SRD shows the categories (races, classes, spells, monsters, equipment, magic items, feats, backgrounds, conditions, rules and more) with filters, search and linked entries. Players can browse it once a DM has imported it. A DM can update or remove it from the SRD page.
-
-Attribution: This work includes material taken from the System Reference Document 5.1 ("SRD 5.1") by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode. JSON data from https://github.com/5e-bits/5e-database (MIT License).
-
-## Linking notes
-
-In a note's text, type `[[` and a list of matching campaign notes and SRD entries appears. Use the arrow keys and Enter (or click) to pick one.
-
-- A note link is written as `[[Note Title]]`, or `[[Note Title|shown text]]`.
-- An SRD link is written as `[[srd:spells/fireball|Fireball]]` (the autocomplete writes this for you). It opens the SRD entry.
-- A plain `[[Fireball]]` with no note of that name opens the SRD entry with exactly that name, if there is one.
-- If neither exists, clicking the link as DM creates an empty note with that title.
-
-## v1.0.8
-
-v1.0.8 is released under the MIT License (it was all rights reserved before) and no longer ships the SRD data (the srd-data folder is gone). A DM imports it from the SRD page: download it from GitHub, upload the JSON files, or import from a folder. An SRD you already imported is kept. The zip contains the full source. See release.txt.
-
-## v1.0.7
-
-v1.0.7 shows the admin a short "Create your first DM account" hint the first time they sign in to the Admin Console, explaining that the DM account is the one that creates, edits and runs campaigns. Its button opens Add user with the DM role chosen. It shows once, and never on installs that already have a DM. See release.txt.
-
-## v1.0.6
-
-v1.0.6 shows the default login banner as real text instead of a picture: "BlackQuill" in large gold lettering with "CAMPAIGN LEDGER" under it. It uses the app's fonts and takes the colours of the table's style, and stays sharp at any size. A banner image you uploaded or chose is still shown as before. See release.txt.
-
-## v1.0.5
-
-v1.0.5 gives the default login banner a large title: "BlackQuill" now fills most of the banner, with a ruled "CAMPAIGN LEDGER" line under it. If you never changed the banner, the new one replaces the old default on the next start; a banner you uploaded or chose is not touched. See release.txt.
-
-## v1.0.4
-
-v1.0.4 adds INSTALL.txt, a short step-by-step guide for installing and running BlackQuill. install.bat, runme.bat and runme-debug.bat now check for Node.js first: if it is missing, or older than 22.12, they say so, explain how to install it and offer to open the Node.js download page, instead of failing with a confusing error. See release.txt.
-
-## v1.0.3
-
-v1.0.3 makes the Style and Icon Pack settings work for everyone. The style chosen by the DM (Settings › Styles) or the admin (Admin Console › Settings) is now used on every browser, including the login page and the Admin Console. Players can still pick a style for their own browser. See release.txt.
-
-## v1.0.2
-
-v1.0.2 lets the admin change the admin password from the Admin Console (Change Password on the admin row; needs the current password). See release.txt.
-
-## v1.0.1
-
-v1.0.1 adds a Logout button (and who is signed in) to the Choose a campaign page, so you are no longer stuck there after deleting a campaign. See release.txt.
-
-## v1.0
-
-v1.0 is the first release. It has the same features as v0.87. The package ships the built app only: the client source code and the development notes are not included, and install.bat no longer builds anything. See release.txt.
-
-## v0.87
-
-v0.87 is a design pass based on the v0.86.3 design critique: notes without a picture are compact text cards, the new-entry editor puts writing first (pictures can be added before the first save, Atlas entries pick "Located in" from a list), Delete moves into a "⋯" menu in the reader, subcategory chips show counts, Settings has its own tabs, the Admin Console lists users first, and the login page has a new default banner. No data changes. See release.txt.
-
-## v0.86.5
-
-v0.86.5 adds a Delete… button for DMs on each card of the Choose a campaign page and fixes deleting campaigns made by older versions. Deleting still needs the full campaign name typed and cannot be undone. See release.txt.
-
-## v0.86.4
-
-v0.86.4 adds the read-only demo account (login `demo`, password `demo`), described under Accounts. The server refuses every change from it, not just the screens. See release.txt.
-
-## v0.86.3
-
-v0.86.3 is a clean-up release: unused and duplicated code removed, two security holes closed (anyone could download `system/users.json` through the banner address, and players could read DM Secrets through the picture address), Settings › Navigation keeps disabled menus, and all libraries are on their current versions (Express 5, React 19.3, Vite 8.3, markdown-it 15, bcryptjs 3). See release.txt.
-
-## v0.86.2
-
-v0.86.2 lets a DM delete a campaign from Settings › Campaign. You must type the campaign's full name to confirm, and the deletion cannot be undone. See release.txt.
-
-## v0.86.1
-
-v0.86.1 starts a new entry in the section you are viewing (for example Atlas › City) and shows an "Imported from the Forgotten Realms Wiki" notice with the original link at the top of imported notes. See release.txt.
-
-## v0.86
-
-v0.86 checks the Forgotten Realms Wiki while you type a new entry's name, suggests the closest article when there is no exact one, and imports the article's text and pictures into the entry's own folder, with the source link and licence kept on the note. See release.txt.
-
-## v0.85.1
-
-v0.85.1 adds `[[` autocomplete in the note editor and links to SRD entries. See release.txt.
-
-## v0.85
-
-v0.85 adds the SRD browser to the sidebar. See release.txt.
-
-## v0.84.6
-
-v0.84.6 removes the built-in admin/blackquill account: on first start BlackQuill asks for the admin password in the browser. See release.txt.
-
-## v0.84.5
-
-v0.84.5 shows the running app version in small text at the right end of the top bar and in the Admin Console header. See release.txt.
-
-## v0.84.4
-
-v0.84.4 turns Dashboard into a campaign overview (section counts, latest session log, open quests, recently updated entries) and stops players receiving DM Eyes Only notes from the server. See release.txt.
-
-## v0.84.3
-
-v0.84.3 adds a House Rules and Rulings section to the sidebar, above Adventure Groups. Players can read it; only the DM can add, edit or delete entries. See release.txt.
-
-## v0.84.2
-
-v0.84.2 puts the Debug Mode checkbox in Admin Settings directly beside its label. See release.txt.
-
-## v0.84.1
-
-v0.84.1 lets Admin > Data Sets copy one campaign's notes into another campaign. See release.txt.
-
-## v0.84
-
-v0.84 removes domains and flattens the data folder into `system/` and `campaigns/`, with an automatic one-time migration from the old layout. See release.txt.
-
-## v0.83.1
-
-v0.83.1 fixes Settings > Styles: six built-in styles, a live-preview style gallery, and theme-derived colours throughout. See release.txt.
-
-## v0.83
-
-v0.83 is a UI/UX redesign of the client: new topbar and sidebar, page headers with subcategory chips, redesigned note cards and reader, empty states, a mobile slide-out menu and accessibility fixes. Functionality, data layout, scripts and debug mode are unchanged. See release.txt.
-
-## v0.82
-
-v0.82 adds `npm audit fix` to install.bat, splits install (install.bat) from run (runme.bat), and adds command-line debug mode (runme-debug.bat, `--debug`, `BLACKQUILL_DEBUG=1`) with login tracing. See release.txt.
-
-## v0.81
-
-v0.81 adds Admin Settings and a domain/campaign-aware dataset copy workflow.
