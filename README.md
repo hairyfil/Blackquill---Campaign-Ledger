@@ -7,6 +7,7 @@ BlackQuill gives the DM and players one place to keep the world, the people in i
 ![Version](https://img.shields.io/badge/version-1.0.8-b8860b)
 ![Node](https://img.shields.io/badge/node-%3E%3D22.12-339933)
 ![License](https://img.shields.io/badge/license-MIT-blue)
+[![Buy Me a Coffee](https://img.shields.io/badge/Buy%20Me%20a%20Coffee-ffdd00?logo=buymeacoffee&logoColor=black)](https://www.buymeacoffee.com/blackquill)
 
 ---
 
