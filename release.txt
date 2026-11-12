@@ -1,0 +1,625 @@
+v1.0.8
+==================================
+BlackQuill is now open source under the MIT License, and the SRD data is no longer included (users import it themselves).
+
+Licence
+- LICENSE is now the standard MIT License, Copyright (c) 2026 Phil Davidson. It replaces the all-rights-reserved proprietary licence: anyone may use, copy, modify, publish, distribute and sell BlackQuill as long as the copyright notice and licence text stay with it.
+- package.json, client/package.json and both package-lock.json files say "license": "MIT" (was "UNLICENSED").
+- The notice on the login page and in the Admin Console now reads "© 2026 Phil Davidson. MIT License." (was "All rights reserved.").
+- README.md's Licence section is rewritten to match.
+
+SRD
+- The srd-data folder (about 4 MB of D&D 5e SRD 5.1 JSON) is removed from the package and the repository.
+- The SRD page offers a DM three ways to bring it in: "Download SRD 5.1 from GitHub" (5e-bits/5e-database), "Upload JSON files…" (pick the 25 files from your computer; 5e-SRD-Spells.json or Spells.json names both work), and "Import from folder", which appears when the files are in blackquill-common-data/system/srd/import/ (or srd-data/5.1/ in the BlackQuill folder, as before).
+- Until it is imported, the app works as normal; the SRD page shows these choices to DMs and tells players to ask their DM.
+- An SRD you already imported (in blackquill-common-data/system/srd/) is kept and keeps working; nothing to do after upgrading.
+- Changed: server/lib/srd.js (folder and upload sources, status adds localAvailable, importFolder, requiredFiles), server/routes/srd.js (new POST /api/srd/import-files), client SrdBrowser.jsx (import screen), styles.css (.srd-import-help), client/src/utils/copyright.js (MIT notice), rebuilt client/dist; LICENSE, README.md, GITHUB.txt examples; version 1.0.8.
+
+v1.0.7
+==================================
+Admin Console: a "getting started" hint the first time the admin signs in.
+- When the admin opens the Admin Console and there is no DM account yet, a popup says to create the first DM account, then log out and sign in as that DM to create, edit and run campaigns. The admin account itself manages users, settings and backups only.
+- "Create DM account" closes the hint and opens Add user with the role already set to DM. "Later" (or Esc, or clicking outside) just closes it.
+- The hint shows once: closing it either way stops it for that admin account (stored as firstDmHintDismissed in system/users.json). It also never shows when a DM account already exists, so existing installs that upgrade will not see it.
+- After creating a DM account the Admin Console now says: DM account created. Log out, then sign in as "<login>" to create, edit and run campaigns.
+- The download now contains the whole project, not just the built app: client source (client/src, client/index.html), prompt.txt (design notes), DEVELOPMENT.txt (how to build), GITHUB.txt (how to put it on GitHub and push new versions), .gitignore and .gitattributes. node_modules is still left out. The separate -source folder is no longer needed.
+- Changed: server/routes/admin.js (firstDmHint in GET /api/admin/dashboard, new POST /api/admin/hints/first-dm/dismiss), client (AdminConsole.jsx FirstDmHint, styles.css .first-dm-hint), rebuilt client/dist; version 1.0.7.
+
+v1.0.6
+==================================
+Login page: the default banner is real text, not a picture.
+- "BlackQuill" is a large heading in the app's heading font (Cinzel), with "CAMPAIGN LEDGER" under it between two rules, a small quill on the left and a diamond on the right. It is the same layout as the v1.0.5 banner, but drawn as text.
+- It takes the colours of the table's style (Settings › Styles or Admin Console › Settings): gold on Default, red on Crimson Keep, green on Emerald Grove and so on. Before, the banner picture was always gold.
+- It stays sharp at any size and scales with the banner width setting; on phones it shrinks to fit. Screen readers read it as the page heading.
+- Only the default banner changes. If you uploaded a banner, or chose a banner other than default-banner.svg, the login page still shows that image.
+- default-banner.svg is still created and kept: it is what Settings › Banner and the Admin Console show as the default banner's preview.
+- Changed: client (App.jsx login page, styles.css .text-banner), rebuilt client/dist; version 1.0.6. The server is unchanged apart from the version number.
+
+v1.0.5
+==================================
+Login page: the default banner has a large title.
+- "BlackQuill" is now more than twice as big (it fills most of the banner) in gold, with "CAMPAIGN LEDGER" under it between two gold rules, a small quill at the left end and a diamond at the right.
+- If your banner is still an untouched default (from v0.86, or from v0.87 to v1.0.4), BlackQuill replaces it with the new one when it starts. A banner you uploaded, or a different banner you chose in Settings › Banner or the Admin Console, is not changed.
+- New installs get the new banner straight away.
+- Changed: server/lib/initData.js (default banner); version 1.0.5 (package.json, client/package.json, both package-lock.json files, server/lib/filesystem/paths.js, the .bat files, README.md, INSTALL.txt). client/dist is unchanged from v1.0.4.
+
+v1.0.4
+==================================
+Install guide, and a clear message when Node.js is missing. Nothing changes in the app or your data.
+- New INSTALL.txt: step-by-step instructions for installing and running BlackQuill on Windows (install Node.js, unpack, install.bat, runme.bat, open http://localhost:3001), where your data is kept, debug mode, and a short Mac/Linux section.
+- install.bat, runme.bat and runme-debug.bat now check for Node.js before doing anything else.
+  - If Node.js is not installed (or not on the PATH), they say so, explain how to install the LTS version from nodejs.org, and ask "Open the Node.js download page now? [Y/N]". Y opens https://nodejs.org/en/download in the browser. Then they stop cleanly.
+  - If Node.js is older than 22.12, they show the installed version and the same instructions.
+  - If Node.js is there but npm is not, they suggest reinstalling Node.js.
+  Before, a missing Node.js only showed "'npm' is not recognized as an internal or external command" followed by "Install failed", with no hint of what to do.
+- The .bat files now use Windows (CRLF) line endings, which cmd handles more reliably.
+- Changed: install.bat, runme.bat, runme-debug.bat, README.md (install section), new INSTALL.txt; version 1.0.4 (package.json, client/package.json, both package-lock.json files, server/lib/filesystem/paths.js). client/dist is unchanged from v1.0.3.
+
+v1.0.3
+==================================
+Fix: changing the style did not change how BlackQuill looks for anyone else.
+- Before, Settings › Styles only recoloured the browser you clicked Apply in, and the Style and Icon Pack choices in Admin Console › Settings were saved but never used. The Admin Console list also showed only one style file instead of the six styles.
+- Now there is one style and one icon pack for the whole table, kept in system/settings.json (activeStyle, activeIconPack). Everyone uses it: the login page, every campaign page and the Admin Console.
+- The DM changes it in Settings › Styles ("Apply Style for everyone") and Settings › Icons. The admin changes it in Admin Console › Settings, which now lists the six built-in styles by name plus any custom style files. The change shows straight away for whoever made it, and for everyone else the next time they open or reload BlackQuill.
+- Players can still choose a style or icon pack for their own browser only, and go back with "Use the table's style" / "Use the table's icon pack".
+- Style choices saved in a browser by earlier versions are cleared once, so the table's style shows everywhere. Re-apply your style in Settings › Styles if it was not the Default.
+- API: GET /api/template/appearance (no login needed) returns { activeStyle, activeIconPack, style }. POST /api/template/appearance { activeStyle?, activeIconPack? } is for the DM or admin; it refuses unknown styles and icon packs and is written to system/audit.log as update-appearance. The demo account is still read-only.
+- Changed: server/routes/template.js; client (new utils/appearance.js; App.jsx, Settings.jsx, AdminConsole.jsx, NoteCard.jsx, utils/icons.js), rebuilt client/dist.
+
+v1.0.2
+==================================
+The admin can change the admin password.
+- Admin Console › User Management: the admin row now has a Change Password button (it used to show a disabled Reset Password). It asks for the current password, the new password (at least 8 characters) and the new password again. The new password works from the next login; you stay signed in.
+- The server checks the current password again and refuses a wrong one, a short one or two that do not match. Each change is written to system/audit.log as change-admin-password.
+- Only the signed-in admin can do this (POST /api/admin/password { currentPassword, newPassword, confirm }). The demo account is still read-only (it gets the "blocked in demo mode" popup) and still cannot be deleted. Lock and Delete stay disabled for the admin account.
+- Changed: server/routes/admin.js, client (AdminConsole.jsx, styles.css), rebuilt client/dist.
+
+v1.0.1
+==================================
+Fix: the Choose a campaign page had no way to log out.
+- The Choose a campaign page now has a bar at the top with "Signed in as <name>" (and "(Dungeon Master)" for DMs), the Demo · read-only label for the demo account, and a Logout button. Before, that page had no top bar, so after deleting your last campaign (or any time you landed there) the only way out was to open a campaign.
+- Only the built app (client/dist) changes. The server is unchanged apart from the version number.
+
+v1.0
+==================================
+First release. Same features as v0.87; only the package changes.
+- The package ships the built app only. The client source code (client/src, client/index.html) and the development notes (prompt.txt) are not included. client/dist is the same build as v0.87.
+- install.bat now only installs the server's dependencies (npm install --omit=dev) and applies npm audit fix. It no longer installs the client's build tools or builds the client, and it stops with a message if client\dist is missing.
+- npm start now starts the server directly. The build and dev scripts and the concurrently dev dependency are removed.
+- Dockerfile installs only the server's dependencies.
+- Version is 1.0 in package.json, client/package.json, README, the .bat scripts and the version label in the app.
+
+v0.87
+==================================
+Licence
+- BlackQuill is now proprietary, all rights reserved. A LICENSE file says you may install and use it for your own games, but not copy, modify, redistribute or claim it as your own. Third-party material (SRD 5.1, the 5e-bits dataset, npm packages) keeps its own licence, and your campaign data stays yours.
+- package.json and client/package.json now say "license": "UNLICENSED" and "private": true.
+- The README, the login page footer, the first-time setup page and the Admin Console menu show the copyright notice.
+
+Design pass, from the v0.86.3 design critique (design/v0.86.3-critique). Nothing changes in your data; everything below is how BlackQuill looks and behaves.
+
+Note cards
+- Notes without a picture are now compact text cards: title, subcategory and a four-line preview. The large "BQ" seal is gone, so cards are easy to tell apart and about twice as many fit on screen. Notes with a picture keep it.
+- If you use your own icon pack (Settings › Icons), its icon shows small beside the title.
+- Slightly larger preview text on the cards.
+
+Reading a note
+- DM Secrets now has a soft DM tint instead of the red Delete look.
+- Delete moved into a "⋯" menu (Delete entry…), away from Edit. It still asks before deleting.
+- The note window fits the note: short notes no longer show a big empty page.
+
+New and edited entries
+- Writing comes first: Title, then the Forgotten Realms Wiki strip, Category and Subcategory, then Content. Pictures moved below the text.
+- The wiki panel is a single line until it finds something. The URL box opens with "Paste a URL".
+- You can add pictures before the first save. They show as previews and are uploaded into the entry's folder when you press Save.
+- Atlas entries: "Parent Slug" is now "Located in", a list of your Atlas entries by name (the slug is still stored behind the scenes).
+- Fixed: when you scrolled a long entry, the top of the form showed through above the Save / Close bar.
+
+Finding things
+- Subcategory chips show how many entries each one holds; empty ones are dimmed. On phones the chips scroll sideways in one row.
+- Dashboard: sections with no entries are drawn more quietly.
+- The "17 notes" pill in the top bar is gone; the page header already shows the count.
+- The sidebar New Entry button is now an outline button; the gold New Entry above the notes is the main one.
+- Settings is one link in the sidebar. The Settings page has its own tabs (Styles, Layout, Icons, Banner, Navigation, Campaign).
+
+Admin Console
+- User Management shows the list first, with an "Add user" button for the form.
+- Tables fill the panel. Last Login reads like "10 Nov 2026, 22:47" (or "Never"), and Email shows "—" when there is none.
+
+Login page
+- The button says "Sign in".
+- New default banner. If you never changed the banner or the login text, the old default banner is replaced and the "Welcome to BlackQuill Campaign Ledger" line is removed (the banner already says it). A banner or text you set yourself is not touched.
+
+Accessibility
+- Faint text (hints, the version label, placeholders) and the reader's close hint have stronger contrast.
+- On phones, menu items, chips and the note buttons are at least 44px tall.
+
+- Changed client: App.jsx, components/notes/NoteCard.jsx, NoteView.jsx, NoteEditor.jsx, NotesGrid.jsx, Dashboard (styles only), components/layout/Sidebar.jsx, Topbar.jsx, components/settings/AdminConsole.jsx, styles.css. Server: lib/initData.js (default banner and intro), lib/filesystem/paths.js (version).
+
+v0.86.5
+==================================
+Campaign deletion: also on the Choose a campaign page, and works for campaigns from older versions.
+- DMs now see a small "Delete…" button on each campaign card on the Choose a campaign page. It opens the same confirmation as Settings › Campaign (warning that it cannot be undone, type the full campaign name exactly). Previously deletion was only inside an open campaign under Settings › Campaign, which was easy to miss. The demo account does not get the button.
+- Fixed: some campaigns could not be deleted.
+  - A campaign that exists only as a folder (no entry in campaigns.json) whose campaign.json names a different slug was listed under that other slug. Deleting it said "Deleted" but removed nothing, and it came back on the next load. Folder-only campaigns are now always listed by their folder name.
+  - A campaign folder with capitals or underscores (for example Lost_Mine) answered "Campaign not found". The exact folder name is now tried first.
+  - On Windows, a folder that could not be fully removed (a file held open by OneDrive, an editor or a viewer) was reported as deleted. BlackQuill now retries a few times and, if the folder is still there, says so and keeps the campaign in the list.
+- Error messages in the delete dialog now include the server's answer code when there is no message.
+- Changed client App.jsx (Campaigns page), components/settings/CampaignSettings.jsx (DeleteCampaignDialog exported), styles.css (.campaign-card-wrap, .campaign-card-delete); server/lib/filesystem/campaigns.js (listCampaigns, findCampaign, deleteCampaign), server/routes/campaigns.js.
+
+v0.86.4
+==================================
+New read-only demo account, alongside the admin account.
+- BlackQuill creates an account with login "demo" and password "demo" when it starts, if there is none. It is a player account: it sees all campaigns, the notes players can see, and the SRD.
+- The demo account cannot add, change or delete anything. When it tries (saving a note, uploading a picture, creating a campaign, changing settings and so on), a "Demo mode" popup says "This is blocked in demo mode. The demo account can look around but cannot add, change or delete anything." The top bar shows a "Demo · read-only" label.
+- This is enforced by the server, not only the screens: every /api request from the demo account other than GET (reading) is refused with 403 { error, demo: true }, except logging in and out. Each refused attempt is written to system/audit.log as demo-blocked.
+- The demo account cannot be deleted: the Admin Console's Delete button is disabled for it and DELETE /api/admin/users/user-demo is refused. The admin can change its password with Reset Password, and can lock it. A changed password is kept across restarts (the account is only created when missing).
+- To show the DM view instead, change the demo account's "role" to "dm" in system/users.json. It stays read-only.
+- If another account already uses the login "demo", BlackQuill leaves it alone and creates no demo account (the server log says so).
+- Changed server/lib/users.js (DEMO_USER_ID "user-demo", isDemo, ensureDemoAccount; publicUser has demo), server/lib/auth.js (blockDemoWrites, DEMO_BLOCKED_MESSAGE), server/index.js, server/lib/initData.js, server/routes/admin.js; client: new utils/demo.js (wraps fetch and raises the popup), main.jsx, App.jsx (DemoBlockedPopup), Topbar.jsx, AdminConsole.jsx, styles.css (.demo-pill, .demo-blocked-modal).
+
+v0.86.3
+==================================
+Clean-up release: less code, two security fixes, current libraries. Nothing changes in how BlackQuill looks or works for DMs and players, apart from the fixes below.
+
+Security fixes
+- Anyone, without logging in, could download any file in the data folder through the login banner address (for example /api/template/assets/..%2F..%2Fusers.json returned every account with its password hash). The banner address now only serves the banner.
+- A player could read a note's DM Secrets by asking for dm-secrets.md as if it were a picture (/api/notes/<campaign>/<note>/asset/dm-secrets.md). The picture address no longer serves .md files.
+- If you exposed v0.86.2 or earlier to people you do not trust, consider changing passwords.
+
+Fixes
+- Settings › Navigation: a menu or subcategory you switched off disappeared from the editor after a reload, so you could not switch it back on, and the next Save dropped it from navigation.json. The editor now loads the full configuration (GET /api/navigation/admin) and keeps disabled items.
+- Admin Console: "User created." and "Admin banner uploaded and selected." disappeared the moment they appeared. Messages now stay until you do something else.
+- Debug logging in the browser now also works for players when debug is on (GET /api/debug-status returns { forced, enabled }).
+
+Removed (dead code and finished one-time patches)
+- The v0.84 data migration (server/lib/migrate.js) and the old v0.83 paths. Data still on the v0.81–v0.83 domains layout must be started once with v0.86.2 first; it converts the folder and takes a backup.
+- Old category names from before Adventure Groups ("The Party", "The Adventurers", "Characters", "City/Town" and so on) are no longer translated.
+- The Google Drive storage-provider stub (server/lib/storage/), which nothing called.
+- Unused server endpoints: GET /api/template/style, GET and POST /api/template/settings, GET /api/admin/users, POST /api/admin/banner (the Admin Console now uploads through POST /api/template/banner, the same route as DM Settings).
+- BlackQuill no longer creates system/layout.json, system/templates/default/banner.svg, icon.svg and default-style.json (nothing read them). Existing copies are left alone.
+- File Checker no longer warns about pre-v0.84 folders.
+- Unused helpers and files: server/config.js, lib/filesystem/{assets,canonical,categories,templates}.js, client fallback category lists, unused CSS rules, an unused "icon set changed" event and debug-changed listener.
+
+Simplified (duplicates merged)
+- One place each for: login/role checks and the audit log (server/lib/auth.js), settings and banner names (server/lib/settings.js), copying folders (copyTree in fsdb.js), the debug switch (isDebugEnabled), the public user object, the note-folder rules, the note editor's starting form, the card text preview and the subcategory chips.
+- The app version on the login page now comes from the server like the top bar.
+- Audit log lines from the Admin Console now use the same fields as the rest ({ user, role, action }) instead of { admin, action }.
+
+Libraries
+- Server: Express 5.3 (was 4.18), bcryptjs 3.0, express-session 1.19, multer 2.5, slugify 1.6.9, concurrently 10. markdown-it and markdown-it-anchor removed from the server (only the client uses markdown-it).
+- Client: React 19.3, Vite 8.3, markdown-it 15. Versions are pinned instead of "latest". @vitejs/plugin-react removed: there was no vite.config.js, so it was never loaded.
+- Node.js 22.12 or later is needed (Node 24 LTS recommended). The Docker image now uses node:24-alpine.
+- package-lock.json files regenerated from https://registry.npmjs.org/ only; npm audit reports 0 vulnerabilities.
+
+v0.86.2
+==================================
+DMs can delete a campaign.
+- New Settings › Campaign page (DMs only) with a red "Delete this campaign" section.
+- Delete Campaign… opens a confirmation that warns the deletion cannot be undone and that every note, picture, DM secret and session file in the campaign is lost for everyone. To confirm, the DM types the full campaign name exactly (capitals and spaces count); the Delete Campaign Forever button only works once it matches.
+- The server checks the typed name again and refuses if it does not match. Only DMs can delete (players and the admin account get "Only DM can do this"). Each deletion is written to system/audit.log as campaign-delete.
+- After deleting, BlackQuill returns to the Choose a campaign page. Anyone else still inside the deleted campaign can no longer save notes to it.
+- There is no undo. If you might want it back, make a backup in the Admin Console first.
+- API: DELETE /api/campaigns/:campaignSlug { confirmName }.
+- New client/src/components/settings/CampaignSettings.jsx; changed App.jsx, Sidebar.jsx, Settings.jsx, styles.css (.danger-zone, .delete-campaign-modal), server/routes/campaigns.js, server/lib/filesystem/campaigns.js, server/routes/notes.js.
+
+v0.86.1
+==================================
+New entries start in the section you are viewing, and imported wiki notes say so at the top.
+- New Entry now fills in Category and Subcategory from where you are. Viewing Atlas › City and pressing New Entry gives a form already set to Atlas / City (with the Atlas template). Viewing just a category (e.g. Personae) sets that category and its first subcategory. From Dashboard, All Entries, Settings or the SRD the form starts empty, as before. Works from the sidebar New Entry button and the New Entry button above the notes. You can still change both before saving. Players are not prefilled into sections only the DM can write to.
+- Imported Forgotten Realms Wiki notes now open with a notice at the top, under the title: "Imported from the Forgotten Realms Wiki on <date>", then "Original article: <link>" and the licence. It is drawn from the note's saved source details, so it stays even if you rewrite the text. When editing such a note, a smaller version of the notice shows under the header. This replaces v0.86's small source line at the bottom of the note.
+- New imports no longer start with a "> Imported from the Forgotten Realms Wiki" quote line (the notice replaces it). The "## Source" credit at the end of the text stays. Notes imported with v0.86 keep their quote line; delete it if you like.
+- Changed client App.jsx, NoteEditor.jsx, NoteView.jsx, styles.css (.wiki-import-banner), server/lib/fandom.js.
+
+v0.86
+==================================
+New entries: Forgotten Realms Wiki lookup, closest-match suggestion, and text + picture import.
+- While you type a new entry's title, BlackQuill checks forgottenrealms.fandom.com (after you pause for about a second, 3+ characters). A "Forgotten Realms Wiki" panel under the Title shows the result:
+  - an exact article ("Found Waterdeep", with Import). Redirects count, so "Elminster" finds "Elminster Aumar". Case does not matter.
+  - no exact article: "No page called "Elminser". Closest match: Elminster Aumar", with Import this. The closest match is the wiki search's spelling suggestion if there is one, then title matches, then full-text search results.
+  - other close matches as small buttons; clicking one puts its URL in the URL box so you can check it or import it.
+  - always a box to paste a specific wiki URL, with Import URL (Enter works too).
+- Import brings in the article text as Markdown: the infobox becomes a "Quick Facts" list, then the article's paragraphs, headings and lists. References, edit links, navigation boxes, tables, and the Appearances / Gallery / References / Further reading / External links sections are left out. A "## DM Notes" heading is added, then a "## Source" section with the attribution.
+- Pictures: the panel shows the article's pictures (up to 8, icons and logos skipped), all ticked. Untick any you do not want. When you press Save, the note is saved first and then the ticked pictures are downloaded into the entry's own folder, next to its .md file (campaigns/<campaign>/notes/<category>/<subcategory>/<entry>/wiki-<name>.png). They appear in the entry's picture strip like uploaded images, with the article's captions. If a download fails the note is still saved and you get a message.
+- Attribution (the wiki's text is CC BY-SA 3.0): every imported note keeps the article URL, title, licence and import date in its front matter (wikiSource) and in the Source section, and the reader shows "Source: <article> on the Forgotten Realms Wiki (CC BY-SA 3.0)" under the text. Each imported picture keeps the link to its File: page (its licence is listed there; many are copyrighted D&D artwork, so keep them for your table).
+- Import asks before replacing text you have already written. "Undo import" puts the note back. The title is only filled in if it was empty.
+- Safety: lookups and imports now need a login (the old import route did not check). Pictures are only downloaded from the wiki's image server (static.wikia.nocookie.net), images only, 10 MB maximum each. Imported text cannot inject HTML into the reader.
+- Replaces the v0.59 page-scraping import (which only took the first 8 paragraphs, guessed the URL from the title and took no pictures). Uses the MediaWiki API (query, opensearch, search, parse, imageinfo).
+- API: GET /api/import/forgotten-realms/lookup?name=, GET /api/import/forgotten-realms?url= (or ?name=), POST /api/notes/:campaign/:slug/wiki-images.
+- New server/lib/fandom.js; changed server/routes/import.js, server/routes/notes.js (wikiSource and image source kept on save; wiki-images route), client NoteEditor.jsx (wiki panel), NoteView.jsx (source line), styles.css (.wiki-* styles).
+- Needs internet access from the BlackQuill server to forgottenrealms.fandom.com and static.wikia.nocookie.net. Without it the panel says it cannot reach the wiki and you can write the entry by hand.
+
+v0.85.1
+==================================
+Note links: autocomplete and SRD entries.
+- Typing [[ in a note's text opens a suggestion list just below the cursor: matching campaign notes first (by title), then matching SRD entries (spells, monsters, magic items, equipment, rules, classes…, labelled "SRD · <category>"). Arrow keys move, Enter or Tab inserts, Escape closes; clicking works too. Players only see notes they are allowed to see.
+- Picking a note inserts [[Note Title]]. Picking an SRD entry inserts [[srd:<category>/<index>|Name]], e.g. [[srd:spells/fireball|Fireball]], so the link always points at that exact entry.
+- In the reader, SRD links show with a small "SRD" marker and open the entry in the SRD browser.
+- Plain [[Name]] links now fall back to the SRD: if no note has that name, an SRD entry with exactly that name opens (for DM and players). Only if neither exists does a DM click create an empty note, as before.
+- The editor hint now reads "Type [[ to link another entry or an SRD entry".
+- SRD suggestions appear only after the SRD has been imported. If the SRD is removed later, SRD links open the SRD import page.
+- New client/src/components/notes/LinkTextarea.jsx; NoteView, NotesGrid, NoteEditor and App wire it up; .link-suggest and .srd-ref styles. No server changes (uses GET /api/srd/search from v0.85).
+
+v0.85
+==================================
+New SRD entry in the sidebar (under a new "Reference" heading, below the Ledger menus): a built-in browser for the D&D 5e System Reference Document 5.1.
+- First visit: the DM sees "The SRD is not in BlackQuill yet" with two buttons. "Import SRD 5.1" uses the copy bundled with the app (srd-data/5.1/, works offline). "Download latest from GitHub" fetches the same files from github.com/5e-bits/5e-database (src/2014/en). Players see a note asking the DM to import it. Until imported, the sidebar shows a small "Set up" badge next to SRD.
+- Storage: blackquill-common-data/system/srd/srd.json (edition, source, importedAt, importedBy, counts) and system/srd/5.1/ (one JSON file per category, plus ATTRIBUTION.txt and the dataset licence). Shared by every campaign. The import writes to system/srd/.incoming first and swaps it in only when every file arrived and parsed, so a failed download never breaks an existing copy.
+- After import, SRD opens a home page with a search box (searches every entry by name) and category tiles with counts, grouped as Character, Spells & Magic, Bestiary, Equipment and Rules (24 categories, about 2,000 entries). The sidebar expands SRD into Races, Classes, Backgrounds, Feats, Spells, Magic Items, Monsters, Equipment, Rules and Conditions.
+- Category lists have a name filter plus dropdown filters where useful: spells by level, class and school; monsters by challenge rating, type and size; magic items by rarity and type; equipment by category; class features by class and level.
+- Entry pages: spells show casting time, range, components, duration, higher-level text and class lists; monsters show a full stat block (AC, HP, speed, ability scores with modifiers, saves, skills, resistances, senses, CR/XP, traits, actions, reactions, legendary actions); classes show proficiencies, choices, starting equipment, the level table (features, class columns, spell slots), spellcasting rules and the class spell list; races show ability increases, traits and subraces; rules chapters show every section with a contents bar. References inside an entry (spells, conditions, traits, equipment and so on) are links to that entry.
+- Attribution: every SRD page ends with the CC-BY-4.0 notice required by the SRD 5.1 licence, plus credit to the 5e-bits dataset (MIT) and a note that BlackQuill is not affiliated with Wizards of the Coast.
+- DM tools on the SRD home page: "Update from GitHub" and "Remove SRD" (campaign notes are not touched). Import and remove are DM/admin only and written to system/audit.log (srd-import, srd-remove).
+- API: GET /api/srd/status, POST /api/srd/import { source: "bundled" | "download" }, DELETE /api/srd, GET /api/srd/search?q=, GET /api/srd/:category, GET /api/srd/:category/:index. Reads need any login; categories and indexes are looked up in the loaded data, never used to build file paths.
+- New files: server/lib/srd.js, server/routes/srd.js, client/src/components/srd/SrdBrowser.jsx, srd-data/5.1/ (about 3.8 MB of JSON, about 0.5 MB zipped). PATHS.srd added in server/lib/filesystem/paths.js.
+- Why SRD 5.1 rather than 5.2: the 5e-bits 5.1 data is the mature, complete set and matches the "races" terminology; 5.2 (2024 rules, "species") can be added later as a second edition.
+
+v0.84.6
+==================================
+First start asks for the admin password instead of creating admin / blackquill.
+- When system/users.json has no admin account, the browser shows a First-time setup page: admin username (default admin), password (minimum 8 characters) and confirmation. Submitting creates the admin, signs you in and opens the Admin Console.
+- The server window prints "FIRST START: open http://localhost:<port> in your browser and choose the admin password." until it is done.
+- The setup API (GET /api/setup/status, POST /api/setup) only works while no admin exists; afterwards it returns 409. Until setup is done, nobody can sign in as admin.
+- Docker/headless: set BLACKQUILL_ADMIN_PASSWORD (8+ characters, optional BLACKQUILL_ADMIN_USERNAME) before the first start to create the admin without the page.
+- Existing installs keep their admin account; nothing changes for them.
+- Password recovery: stop the server, delete the admin entry from system/users.json, start again, and the setup page appears.
+- Note: whoever opens the app first while no admin exists chooses the password, so do the first start before exposing BlackQuill to other people.
+- New server/routes/setup.js; hasAdminAccount/createAdminAccount in server/lib/users.js; FirstRunSetup screen in client/src/App.jsx.
+
+v0.84.5
+==================================
+The current app version is shown in small, muted text at the right end of the top bar (after Logout), and next to "Admin Console" in the admin sidebar.
+- The label comes from the server (new GET /api/version, no login needed, returns VERSION from server/lib/filesystem/paths.js), so it always shows the version that is actually running. There is still one place to change the version on the server.
+- Hidden on phone-width screens (below 480px) so the campaign name keeps its space. The login page footer still shows the version.
+- New client/src/utils/version.js (useAppVersion hook) and .app-version style.
+
+v0.84.4
+==================================
+Dashboard is now a campaign overview. All Entries stays the full card list of every entry.
+- Sections: one tile per sidebar section with its entry count; click to open that section. DM Eyes Only is shown (red) to the DM only.
+- Latest session log: the most recently updated note in Chronicle > Session Logs or Session Archive, with date and a short excerpt; click to read it. Link to all session logs.
+- Open quests: Quests entries not in Completed or Failed, newest first (up to 8), with their subcategory; click to read. Link to all quests.
+- Recently updated: the 8 most recently created/updated entries as cards.
+- Typing in the search box on Dashboard shows matching cards, as before. An empty campaign shows an empty state with Create the first entry.
+- New client/src/components/notes/Dashboard.jsx and .dash-* styles (theme-derived colours, stacks to one column below 860px).
+
+Fixes found while building it:
+- Players no longer receive DM Eyes Only notes (or any dmOnly section) from the server. Previously All Entries, Dashboard and search sent them to the browser for players. GET /api/notes/:campaign, a single note and its images now filter them out for non-DM users.
+- Players cannot create or overwrite a note in a DM-only section (403).
+- The DM's sidebar and dashboard now use the DM's real navigation. Previously navigation was loaded before login, so the DM got the player view (DM Eyes Only came from a built-in fallback and was missing from the New Entry category list). Navigation now reloads after login.
+
+v0.84.3
+==================================
+New sidebar section: House Rules and Rulings, directly above Adventure Groups.
+- Subcategories: House Rules and Rulings. Notes are stored in campaigns/<campaign>/notes/house-rules-and-rulings/<subcategory>/<note-slug>/.
+- Everyone (DM and players) can read the notes.
+- Only the DM can create, edit, delete, move notes into or out of the section, or add/remove note images. The server enforces this (403 "Only the DM can add or change notes in this section"), not just the UI.
+- For players the section hides the New Entry buttons, the category is left out of the New Entry category list, and the page header says "only the DM can add entries". The DM sees "players can read, only you can edit".
+- Implemented as a navigation menu flag dmWriteOnly: true, so the same rule can apply to other sections later.
+- Existing installs: system/navigation.json is upgraded once on first start (navigation version 1 -> 2) to insert the section above Adventure Groups. Your other menu changes are kept. If you later move or disable it in Settings, that sticks.
+- New installs get it in the default navigation.
+
+v0.84.2
+==================================
+Admin > Settings: the Debug Mode checkbox now sits directly beside its "Debug Mode" text.
+- Root cause: the stacked admin form stretched every input to full width, so the checkbox was centred in a wide empty box below its label.
+- The checkbox and its text are now one clickable row (new .checkbox-row style). Clicking the text also toggles debug mode.
+- No behaviour or data changes.
+
+v0.84.1
+==================================
+Admin > Data Sets: copy one campaign's notes into another campaign.
+- The Source dropdown lists data sets and campaigns. Picking a campaign copies its notes/ folder (notes, note images, dm-secrets.md) into the target campaign's notes/ folder.
+- Campaign copies never overwrite: a note file that already exists in the target is skipped and the count is reported. Data set copies still overwrite, as before.
+- The target list hides the source campaign; the API also refuses copying a campaign into itself.
+- New API: POST /api/admin/campaigns/copy { sourceCampaignSlug, campaignSlug }. Audited as copy-campaign-notes; debug mode logs source and target paths and each copied file.
+- No Target Domain option anywhere (domains were removed in v0.84).
+
+v0.84
+==================================
+Data layout restructure: domains removed, data flattened into system/ and campaigns/.
+
+New layout (blackquill-common-data/):
+- system/ holds everything that is not campaign content: users.json (all accounts), settings.json (was system/global-settings.json), navigation.json (was settings/navigation.json), audit.log, layout.json, templates/, styles/, icons/, images/banners/, datasets/, backups/ and legacy/.
+- campaigns/ holds campaigns.json plus one folder per campaign: campaigns/<campaign-slug>/{campaign.json, notes/, sessions/, assets/}. The data-campaign- prefix is gone.
+- Removed: domains/, shared-assets/, and the top-level datasets/, backups/, settings/ and users/ folders.
+
+Domains removed:
+- One login page for everyone (the /admin and /d/<domain> login URLs are gone; any URL shows the same login). Admin opens the Admin Console, DMs and players open the campaign list.
+- All DMs and players see all campaigns. DMs can create campaigns; campaign names must be unique across the instance.
+- One set of branding (banner, style, icon pack, intro text) for the whole instance, edited from Admin Settings or the DM Settings page; both write to system/.
+- Admin Console: Domain Management removed. User Management creates DM or player accounts directly. Data Sets picks a campaign (no domain step). Backup offers full backup or per-campaign backup. File Checker checks the new layout and warns about leftover old-layout folders.
+- The login form no longer pre-fills admin / blackquill.
+- Removed server/routes/domains.js and server/lib/filesystem/domains.js. New server/lib/users.js and server/lib/migrate.js.
+
+Automatic migration from v0.81–v0.83.1 data (server/lib/migrate.js, runs once at startup):
+- Takes a full copy of the data folder into system/backups/pre-v0.84-migration-<time>/ first.
+- Merges system/admin-users.json, legacy users/users.json and every domain's users into system/users.json. Login name clashes between domains are renamed <name>-<domain>. Users in suspended domains are locked. Each migrated user keeps formerDomain for reference.
+- Moves shared-assets/ and each domain's templates, styles, icons and banners into system/. Identical files are dropped; different files with the same name are kept as <name>-<domain> (icon packs as <pack>-<domain>).
+- Moves each domain's campaigns to campaigns/<slug>/ (clash: <slug>-<domain>) and pre-v0.81 campaigns/data-campaign-<slug>/ folders to campaigns/<slug>/, and rebuilds campaigns.json. Each campaign gets a campaign.json with formerDomain and migratedFrom.
+- Moves datasets/, backups/ and settings/navigation.json into system/.
+- Archives anything left (domains.json, per-domain branding/domain.json) to system/legacy/v0.83/. Never deletes user data.
+- Writes system/migration-v0.84-<time>.log and system/layout.json (layoutVersion 2). If a step fails, it stops, logs the error, and resumes on the next start.
+- Debug mode (runme-debug.bat / --debug / BLACKQUILL_DEBUG=1) prints each migration step.
+
+Other fixes:
+- Campaign slugs from URLs are sanitised before building folder paths.
+- "Backup All Data" no longer copies the backups folder into itself.
+- package-lock.json files now resolve packages from registry.npmjs.org (they pointed at an unreachable private mirror, which could make install.bat fail).
+- Unchanged: install.bat, runme.bat, runme-debug.bat behaviour, debug mode, login tracing, notes format, note folders, the v0.83 UI and v0.83.1 style gallery.
+
+v0.83.1
+==================================
+Fix: choosing a style in Settings > Styles barely changed the app.
+- Root cause: a fresh install only ships one style file (Default), so the dropdown had nothing else to switch to, and the small preview box did not show what a style would look like.
+- Six built-in styles now ship with the client: Default, Parchment Day (light), Emerald Grove, Frost Arcane, Crimson Keep and Shadowfell. Style .json files in the styles folder still appear (marked Custom); a file with the same name as a built-in replaces it.
+- Styles page is now a gallery: each style shows a mini mock-up of the app and its colour swatches. Clicking one recolours the whole app straight away as a live preview; Apply Style keeps it, Revert or leaving the page without applying restores the saved style.
+- New optional style key accentText (text colour on accent buttons) so light and bright accents stay readable.
+- DM red text, error/success messages, status badges and wiki links now derive from the theme instead of fixed colours, so light themes stay readable.
+- Only theme keys are written as CSS variables (previously name/file were written too).
+- Unchanged: styles are still saved per browser (localStorage), as before; icon pack SVGs keep their own colours.
+
+v0.83
+==================================
+UI/UX redesign (client only; server, API, data layout, install.bat/runme.bat/runme-debug.bat and debug mode unchanged).
+- New design system in styles.css: spacing scale, radii, shadows, focus ring and one button family (primary, outline, ghost, danger), all derived from the existing style variables so Settings > Styles themes still apply.
+- Topbar: BlackQuill brand, campaign switcher, breadcrumb (Category > Subcategory), note count and user chip.
+- Sidebar: flat navigation with a gold active indicator, "Ledger" group label, New Entry and search at the top, collapsible DM Eyes Only section (remembered per browser) with higher-contrast red text.
+- Page header on every card view: title, parent category, entry count, New Entry button, and subcategory filter chips.
+- Empty categories and empty searches show a message with a call to action instead of a blank frame.
+- Note cards are now real buttons (keyboard and screen-reader accessible) with a media band, Cinzel title, subcategory tag and a short text excerpt. DM Eyes Only cards get a red top edge. Portrait Standard and Portrait Condensed layouts are kept.
+- Note reader: parchment page with readable Markdown typography (headings, lists, quotes, tables), category eyebrow, Edit as the primary action, Close as a neutral X, and a "Press Esc" hint.
+- Note editor: Category and Subcategory side by side, Markdown/wiki-link hint, sticky Save/Close bar, "Unsaved changes" indicator in the header. Removed the permanently disabled Edit button from the editor bar.
+- Login: one card with scope label, intro text, labelled fields and Enter-to-submit.
+- Campaign picker: campaign cards and a "New campaign" form; friendly message when there are no campaigns.
+- Admin Console: branded sidebar, two-column labelled forms, cleaner tables and badges, Backup / Restore and File Checker laid out as panels/toolbars.
+- Responsive: below 860px the sidebar becomes a slide-out drawer opened from a menu button; note reader and editor go full screen on phones; touch targets are 40-44px.
+- Accessibility: visible focus rings, labelled inputs, aria-expanded on collapsible menus, reduced-motion support, DM red text contrast raised above 4.5:1.
+- index.html loads the Cinzel and Inter web fonts (falls back to Georgia/Segoe UI/Arial when offline).
+- Known issue (unchanged): package-lock.json files point to a private registry; delete both lockfiles before running install.bat.
+
+v0.82
+==================================
+- install.bat now runs npm audit fix after npm install for both the root/server and client packages. Audit fixes stay within package.json semver ranges; unresolved vulnerabilities print a warning and do not stop the install.
+- Split install and run: install.bat only installs/updates and builds; new runme.bat only starts BlackQuill (node server/index.js) and checks that install.bat has been run.
+- Added runme-debug.bat to start BlackQuill with debug mode forced on.
+- Debug mode can be forced from the command line with --debug or BLACKQUILL_DEBUG=1, overriding the saved admin setting, so debugging works even when you cannot log in.
+- New GET /api/debug-status endpoint lets the client enable browser debug logging when debug is forced.
+- Login attempts are traced to the server console in debug mode (account matched, users file checked, password accepted or not; no passwords logged).
+- README documents the three Windows scripts and the debug options.
+- Known issue: package-lock.json and client/package-lock.json resolve packages from a private registry (packages.applied-caas-gateway1...) instead of registry.npmjs.org, so npm install may fail on a clean machine. Workaround: delete both lockfiles before running install.bat.
+
+v0.81
+- Added path-aware multi-tenant login handling for /admin and /d/<domainSlug>.
+- Domain creation now ensures isolated domain settings/branding.json and domain-local copied templates, styles, icons, and banners.
+- Admin branding remains global through system/global-settings.json and shared-assets.
+- Added admin banner manager parity scaffold with upload/select preview support.
+- Added 20ch visible compact campaign/domain text inputs.
+- Settings/admin forms use the aligned FormRow pattern.
+- Confirmed bcryptjs-only authentication and multer 2.x dependency.
+- Added canonical filesystem/branding abstraction layer for admin/global and domain-local asset resolution.
+
+v0.80
+==================================
+- Backups now live under blackquill-common-data/backups/ and are validated by File Checker.
+- Domain Management table now shows the assigned DM login for each domain.
+- DM Accounts table now shows DM login name in the first column.
+- User Management now shows all logins, including admin, domain DMs, and domain users/players.
+- Admin account is protected: it cannot be deleted, suspended, locked, or reset from User Management.
+- Backend now blocks attempts to lock/delete/reset protected admin accounts.
+- Updated prompt.txt and package version to v0.80.
+
+==================================
+v0.77
+- Standardized management form layout across admin/domain/settings screens.
+- Replaced placeholder-only fields with left-side labels and right-side inputs.
+- Aligned stacked input fields on a common left edge.
+- Compact management inputs now use approximately 20 visible characters while still accepting longer text.
+
+==================================
+v0.76
+==================================
+- Added Admin Settings panel mirroring DM settings for global/admin defaults.
+- Added domain-aware dataset copy flow: choose dataset, target domain, then target campaign from a dropdown populated from that domain.
+- Dataset copies now land in the selected campaign notes folder.
+- Admin settings remain stored globally under blackquill-common-data/system.
+
+==================================
+v0.80
+==================================
+- Added admin console menu after admin login.
+- Added Domain Management for create/edit/delete/suspend domains and DM accounts.
+- Added User Management table for all users grouped/listed by domain.
+- Added lock/unlock, reset password, and delete actions for domain users.
+- Added File Checker for validating folder/note structure and safe repair.
+- Added Backup / Restore actions that create backup folder copies.
+- Added Data Sets area for copying reusable datasets into domains/campaigns.
+- Fixed stale ensureDefaults startup call by restoring safe default initialization.
+- Kept core build lean; optional graphics remain in content packs.
+
+==================================
+v0.74
+==================================
+- Added multi-tenant DM domain architecture.
+- Changed default login from DM account to platform admin account: admin / blackquill.
+- Admin can create isolated DM domains and default DM accounts for those domains.
+- Domain DM users manage campaigns inside their own domain only.
+- Domain folders live under blackquill-common-data/domains/domain-<slug>/.
+- Each domain has isolated users, settings, images, campaigns, campaign notes, sessions, and exports.
+- Added storage provider abstraction layer with LocalStorageProvider implemented and GoogleDriveStorageProvider stubbed for future external storage integration.
+- Campaign, notes, assets, and sessions now resolve beneath the logged-in user's DM domain.
+- Updated prompt.txt for v0.74 multi-tenant rebuild requirements.
+
+==================================
+v0.71
+==================================
+- Restored/protected DM Eyes Only menu for DM users even if missing from navigation settings.
+- Fixed note move logic so category/subcategory changes move note folders to the strict canonical destination instead of nesting inside the old folder.
+- Renamed The Adventurers to Adventure Groups.
+- Added Adventure Groups / Groups and Adventure Groups / PCs structure.
+- Legacy The Party and The Adventurers names map to Adventure Groups.
+- Creating/editing notes now uses Adventure Groups naming.
+
+v0.70
+- Renamed The Party to The Adventurers.
+- Added The Adventurers > PCs submenu for player character/adventurer notes.
+- Legacy The Party / Characters navigation entries are mapped to The Adventurers / PCs.
+- Changing a note category, subcategory, location level, title, or slug now moves the entire note folder to the new canonical location.
+- Note folder moves preserve markdown, images, dm-secrets.md, and note-local attachments.
+- Added collision protection so moving a note cannot overwrite an existing destination folder.
+
+v0.69
+- Added working Settings > Navigation drag-and-drop ordering for top-level categories and subcategories.
+- Added up/down reorder buttons as a fallback for drag-and-drop.
+- Sidebar, New Entry, and Edit dropdowns use the saved navigation order.
+- Changed login banner to show the full image without cropping, limited to 80% of screen width.
+
+BlackQuill v0.69
+=================
+- Fixed configurable navigation path resolution so subcategories are stored under their parent menu folder, e.g. notes/atlas/cities rather than notes/city or notes/cities.
+- Fixed navigation toggle logic in Settings: disabling a parent category disables all child subcategories.
+- Fixed subcategory toggle behavior: enabling a subcategory automatically enables its parent category.
+- Fixed navigation editor to use stable keys instead of filtered array indexes, preventing the wrong subcategory from being toggled.
+- Sidebar, New Entry, and Edit dropdowns now only show enabled categories and subcategories from navigation.json.
+
+==================================
+v0.69
+==================================
+- Added configurable navigation taxonomy stored in blackquill-common-data/settings/navigation.json.
+- DM can enable/disable menu items and subcategories from Settings > Navigation.
+- DM can add new subcategories such as Settlement and the app auto-creates supporting folders.
+- Sidebar, New Entry, and Edit dropdowns now read category/subcategory choices from navigation settings.
+- Filesystem abstraction now resolves custom navigation folders from navigation.json before falling back to built-in defaults.
+- Updated prompt.txt and version references to v0.69.
+
+
+==================================
+v0.63
+==================================
+- Fixed New Entry close/discard workflow so Close Without Saving closes the editor modal and returns to the category cards.
+- Added full modal state cleanup for unsaved New Entry drafts, including dirty state, upload/import errors, saving/uploading flags, and temporary form state.
+- Updated prompt.txt and version references.
+
+
+
+==================================
+v0.62
+==================================
+- Made Portrait - Standard the default layout.
+- Renamed Portrait layout to Portrait - Condensed and made it the second layout option.
+- Reworked Styles settings into one dropdown with a single live sample preview.
+- Reworked Icons settings so selecting an icon pack previews all icons in that pack before confirmation.
+- Debug mode now logs all menu choices and browser errors to the console while enabled.
+- Updated prompt.txt and version references.
+
+
+==================================
+v0.61
+==================================
+- Added new layout option: Portrait - Standard.
+- Portrait - Standard copies the existing portrait card layout but increases card size by 40%.
+- Increased spacing between cards in Portrait - Standard layout.
+- Retained existing Portrait layout as a selectable option.
+- Updated prompt.txt and version references.
+
+
+==================================
+v0.60
+==================================
+- Added DM-only Delete Note with confirmation.
+- Added menu debug tracing controlled by Settings debug mode.
+- Indented DM Eyes Only submenu items.
+- Reworked New Entry so creator selects category/subcategory before saving and loads suitable templates.
+- Added per-note DM Secrets stored as dm-secrets.md sidecar files, never returned to player users.
+
+v0.60
+- Fixed DM Eyes Only menu routing and canonical submenu folder paths.
+- Moved Settings to the bottom of the sidebar.
+- Removed Edit Banner Text from DM Eyes Only.
+- Added Settings controls for login banner upload and intro text editing.
+- Added DM-only Debug Mode toggle to control startup/debug logging.
+- Settings/debug/template data remain under ../blackquill-common-data/.
+
+====================================================
+v0.60
+====================================================
+- Fixed duplicate cards after editing by treating each note folder as one canonical note.
+- Note scanner now only accepts <note-slug>/<note-slug>.md canonical note files.
+- Save logic removes the old Markdown file when a note is moved/renamed to prevent duplicate browser entries.
+- Opening a note now uses the popout/modal first.
+- Editing stays inside the same note popout instead of opening a second separate popup.
+- Updated prompt.txt and version references to v0.60.
+
+==================================
+v0.60
+==================================
+- Note editing now opens in a popout/modal editor window.
+- Added image delete controls for images attached to a note.
+- New note creation can optionally populate starter content from Forgotten Realms Wiki.
+- Forgotten Realms import handles 404 as "not found" and allows alternative URL or empty note creation.
+- Updated prompt.txt and version references to v0.60.
+
+==================================
+v0.56
+==================================
+- Added YAML frontmatter sanitization before every note save to prevent js-yaml undefined-value crashes.
+- Fixed image-save workflow so uploaded image metadata is cleaned before writing Markdown.
+- Moved edit-mode Save and Close controls to the top-right note action bar.
+- Standardized note action button font, colour, and spacing.
+- Added unsaved-changes protection when closing an edited note.
+- Close prompts for Cancel, Save, or Close Without Saving when edits are dirty.
+- Escape in edit mode now follows the same unsaved-change protection.
+- Updated prompt.txt and package versions.
+
+==================================
+v0.55
+==================================
+- Restored image upload control when editing existing notes.
+- Fixed note-local image URL resolution for existing image links.
+- Existing /images and /assets references now resolve from the note folder by filename.
+- Pressing Escape closes an open note and returns to the category card grid.
+- Clicking the open note or same card again closes it.
+- Updated prompt.txt and package versions.
+
+==================================
+v0.54
+==================================
+- Added filesystem abstraction layer under server/lib/filesystem/.
+- Centralized all common data, campaign, notes, assets, template, icon, and user paths.
+- Standardized Atlas note folders to plural-only canonical folder names.
+- Removed direct note-folder construction from routes.
+- Preserved legacy City/Town compatibility while saving new notes under cities/.
+- Kept portrait layout as the only active layout option.
+- Kept DM Eyes Only sidebar items visually distinct in red.
+- Updated bundled default banner and icon assets.
+- Updated prompt.txt and version references to v0.54.
+
+==================================
+v0.52
+==================================
+- Restored DM edit capability when an expanded note is open.
+- Added an Edit button for DM users inside the expanded note view.
+- Added edit/cancel/save flow for existing notes.
+- Restored clickable [[wiki links]] in rendered note content.
+- Wiki links now search all notes in the campaign, switch to the linked note category/subcategory, and open the linked note.
+- Missing wiki links can auto-create DM-only notes for DM users.
+- Updated version references to v0.52.
+
+==================================
+v0.51
+==================================
+- Rebuilt from scratch as a clean fork.
+- Centralized all persistent data under ../blackquill-common-data/.
+- Campaign folders now live under ../blackquill-common-data/campaigns/.
+- Updated all code references to use the centralized PATHS configuration.
+- Portrait layout is now the default and only active layout.
+- Settings retains a Layout section for future layout options.
+- DM Eyes Only menu items use a red warning colour to distinguish them from normal menu items.
+- Included install.bat, release.txt, prompt.txt, and complete source folder structure.
+
+==================================
+v0.50
+==================================
+- New fork baseline.
+- Added centralized common data concept.
+- Removed lock files from distributable package.

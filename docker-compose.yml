@@ -1,0 +1,9 @@
+services:
+  blackquill:
+    build: .
+    ports:
+      - "3001:3001"
+    environment:
+      - BLACKQUILL_DATA=/data/blackquill-common-data
+    volumes:
+      - ./blackquill-common-data:/data/blackquill-common-data

@@ -1,0 +1,16 @@
+BlackQuill v1.0.8 - source and development notes
+
+This folder is the complete project: the server (server/), the client source (client/src, client/index.html), the built client (client/dist), the install and run scripts, and the docs. It is also what goes in the GitHub repository.
+
+Run it:     install.bat, then runme.bat (Windows), or: npm install --omit=dev && npm start
+Build the client after changing anything in client/src:
+            cd client
+            npm ci
+            npm run build      (writes client/dist; commit the new client/dist too)
+Dev server: cd client && npm run dev   (needs the BlackQuill server running on port 3001)
+
+client/dist is kept in the repository on purpose: install.bat and runme.bat use it directly, so people can run BlackQuill without building the client.
+
+Not in the repository (see .gitignore): node_modules folders, log files, .env files, and your campaign data. The data lives outside this folder, in ..\blackquill-common-data (or wherever BLACKQUILL_DATA points), so pushing code never uploads your campaigns or user accounts.
+
+prompt.txt holds the full design notes for every version. release.txt lists what changed in each release. GITHUB.txt explains how to put this on GitHub and push new versions.

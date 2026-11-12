@@ -1,0 +1,21 @@
+# Dependencies (npm install recreates them)
+node_modules/
+
+# Campaign data, user accounts and backups live outside the repo, but just in case
+blackquill-common-data/
+system/
+campaigns/
+*.zip
+
+# Logs and local settings
+*.log
+npm-debug.log*
+.env
+.env.*
+
+# Editor and OS clutter
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+desktop.ini

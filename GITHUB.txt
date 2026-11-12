@@ -1,0 +1,40 @@
+Putting BlackQuill on GitHub (Windows)
+
+You only do part A once. Part B is what you do for each new version.
+
+A. FIRST TIME
+1. Install GitHub Desktop from https://desktop.github.com and sign in with your GitHub account.
+2. Unzip the BlackQuill zip (for example blackquill-v1.0.8.zip). Move the folder somewhere permanent and rename it to just "blackquill"
+   (for example C:\Users\<you>\Documents\GitHub\blackquill). This folder is now your repository folder.
+3. In GitHub Desktop: File > Add local repository > choose the blackquill folder.
+   It will say "this directory does not appear to be a Git repository": click "create a repository".
+   Name: blackquill. Leave "Initialize with README" unticked. Git ignore and License: None (the folder already has its own). Click Create repository.
+4. Click "Publish repository". Keep "Keep this code private" ticked unless you want it public. Click Publish.
+   Your code is now on github.com under your account.
+
+B. EACH NEW VERSION (for example v1.0.9)
+1. Unzip the new zip somewhere temporary.
+2. Open your blackquill repository folder. Delete everything in it EXCEPT the hidden .git folder
+   (in Explorer, turn on View > Show > Hidden items so you can see it, and leave it alone).
+   This makes sure files removed in the new version are removed from GitHub too.
+3. Copy everything from inside the new blackquill-v1.0.9 folder into the repository folder
+   (including .gitignore and .gitattributes).
+4. In GitHub Desktop you will see the changed files. In Summary type "v1.0.9", click "Commit to main",
+   then click "Push origin".
+5. Optional: on github.com open the repository, click Releases > Draft a new release, tag v1.0.9,
+   and attach the zip, so each version is easy to download later.
+
+Your campaign data is never uploaded: it lives in ..\blackquill-common-data, outside the repository folder.
+
+COMMAND LINE INSTEAD (if you prefer, needs Git for Windows from https://git-scm.com)
+First time, after creating an empty repository called blackquill on github.com (no README):
+    cd C:\path\to\blackquill
+    git init -b main
+    git add .
+    git commit -m "BlackQuill v1.0.8"
+    git remote add origin https://github.com/<your-username>/blackquill.git
+    git push -u origin main
+Each new version, after step B2-B3 above:
+    git add -A
+    git commit -m "v1.0.9"
+    git push

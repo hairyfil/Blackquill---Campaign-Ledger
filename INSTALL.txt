@@ -1,0 +1,77 @@
+BlackQuill Campaign Ledger v1.0.8 - Install and Run
+====================================================
+
+Windows
+-------
+
+1. Install Node.js (one time)
+   Go to https://nodejs.org and download the LTS version (22 or later).
+   Run the installer and keep the default options.
+   If you skip this, install.bat and runme.bat will tell you Node.js is
+   missing and offer to open the download page.
+
+2. Unpack BlackQuill
+   Right-click the zip file, choose "Extract All...", and pick a folder,
+   for example Documents\BlackQuill.
+
+3. Install (one time)
+   In the extracted folder, double-click install.bat.
+   It downloads what BlackQuill needs (an internet connection is needed
+   for this step). When it says "Install complete", press a key to close it.
+
+4. Run
+   Double-click runme.bat. A black window opens and shows
+   "BlackQuill running at http://localhost:3001".
+   Leave this window open while you use BlackQuill.
+
+5. Open BlackQuill
+   Open your web browser and go to:   http://localhost:3001
+   (runme.bat does not open the browser for you.)
+   The first time, BlackQuill asks you to choose the admin username and
+   password (at least 8 characters). After that, everyone signs in on the
+   normal login page. There is also a read-only demo account:
+   login demo, password demo.
+
+6. Stop
+   Close the runme.bat window (or press Ctrl+C in it).
+
+Next time: just double-click runme.bat and open http://localhost:3001.
+
+Other people at the table can use BlackQuill from their own devices on the
+same network by going to http://<this PC's IP address>:3001 . Windows may
+ask whether to allow Node.js through the firewall; allow it on private
+networks for this to work.
+
+Where your data is kept
+-----------------------
+Your campaigns, users and settings are stored in a folder called
+blackquill-common-data, next to the BlackQuill folder (not inside it).
+When you install a newer version, unpack it into the same place as before
+(so its folder sits next to blackquill-common-data) and it keeps using your
+data, so nothing is lost. Back that folder up to keep your campaigns safe.
+
+Debug mode
+----------
+If something goes wrong (for example, you cannot sign in), run
+runme-debug.bat instead of runme.bat. It shows more detail in the window.
+
+Mac and Linux
+-------------
+Install Node.js 22.12 or later (from https://nodejs.org or your package
+manager), then in a terminal, in the BlackQuill folder:
+
+   npm install --omit=dev      (one time)
+   npm start                   (each time you want to run it)
+
+Then open http://localhost:3001 in your browser. Press Ctrl+C in the
+terminal to stop it.
+
+Using a different port
+----------------------
+BlackQuill uses port 3001. To use another port, set the PORT environment
+variable before starting it, for example in a command prompt:
+
+   set PORT=8080
+   runme.bat
+
+and then open http://localhost:8080 instead.
