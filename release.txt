@@ -13,6 +13,7 @@ SRD
 - The SRD page offers a DM three ways to bring it in: "Download SRD 5.1 from GitHub" (5e-bits/5e-database), "Upload JSON files…" (pick the 25 files from your computer; 5e-SRD-Spells.json or Spells.json names both work), and "Import from folder", which appears when the files are in blackquill-common-data/system/srd/import/ (or srd-data/5.1/ in the BlackQuill folder, as before).
 - Until it is imported, the app works as normal; the SRD page shows these choices to DMs and tells players to ask their DM.
 - An SRD you already imported (in blackquill-common-data/system/srd/) is kept and keeps working; nothing to do after upgrading.
+- prompt.txt (internal design notes) is no longer part of the download or the repository, and .gitignore now lists it so it is not added back by mistake.
 - Changed: server/lib/srd.js (folder and upload sources, status adds localAvailable, importFolder, requiredFiles), server/routes/srd.js (new POST /api/srd/import-files), client SrdBrowser.jsx (import screen), styles.css (.srd-import-help), client/src/utils/copyright.js (MIT notice), rebuilt client/dist; LICENSE, README.md, GITHUB.txt examples; version 1.0.8.
 
 v1.0.7

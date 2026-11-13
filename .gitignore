@@ -7,6 +7,9 @@ system/
 campaigns/
 *.zip
 
+# Internal design notes (kept out of the repository)
+prompt.txt
+
 # Logs and local settings
 *.log
 npm-debug.log*

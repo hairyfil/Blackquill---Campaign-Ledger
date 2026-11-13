@@ -13,4 +13,4 @@ client/dist is kept in the repository on purpose: install.bat and runme.bat use 
 
 Not in the repository (see .gitignore): node_modules folders, log files, .env files, and your campaign data. The data lives outside this folder, in ..\blackquill-common-data (or wherever BLACKQUILL_DATA points), so pushing code never uploads your campaigns or user accounts.
 
-prompt.txt holds the full design notes for every version. release.txt lists what changed in each release. GITHUB.txt explains how to put this on GitHub and push new versions.
+release.txt lists what changed in each release. GITHUB.txt explains how to put this on GitHub and push new versions.
