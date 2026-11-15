@@ -24,7 +24,7 @@ BlackQuill gives the DM and players one place to keep the world, the people in i
 - Search across the whole campaign.
 
 ### Notes and linking
-- **Example campaign on first start:** a fresh install comes with an "Example Campaign" holding a Markdown and links cheat sheet, a made-up village, an innkeeper who lives there and a quest that ties them together. Read them, edit them, or delete the campaign when you are ready.
+- **Example campaign on first start:** a fresh install comes with an "Example Campaign" holding a Markdown cheat sheet, a guide to `[[ ]]` links, a guide to changing the menus, a made-up village, an innkeeper who lives there and a quest that ties them together. Read them, edit them, or delete the campaign when you are ready.
 - Every entry is Markdown, shown on a parchment-style reader page.
 - **Wiki links:** type `[[` in a note and pick from matching campaign notes and SRD entries. Links look like `[[Note Title]]` or `[[Note Title|shown text]]`.
 - A DM can click a link to a note that does not exist yet to create it.

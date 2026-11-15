@@ -3,15 +3,17 @@ v1.0.9
 A fresh install now starts with an example campaign, so new users have something to read and copy.
 
 Example campaign
-- On the very first start (no campaigns.json and no campaign folders yet), BlackQuill creates "Example Campaign" with four example cards:
-  - Codex › Rules Reference: "Markdown and Links Cheat Sheet". Headings, emphasis, lists, quotes, web links and pictures, tables, code and dividers, each shown as the Markdown to type and the result. It explains [[ ]] links ([[Name]], [[Name|shown text]], typing [[ to pick an entry, DM clicks on a missing link create the entry) and that links also open SRD entries once the DM has loaded the SRD ([[srd:spells/fireball|Fireball]], and a plain [[Goblin]] when no campaign entry has that name).
-  - Atlas › Village: "Thornwick Hollow", a made-up fog-bound fishing village. The cheat sheet links to it.
+- On the very first start (no campaigns.json and no campaign folders yet), BlackQuill creates "Example Campaign" with six example cards:
+  - Codex › Rules Reference: "Markdown Cheat Sheet". Headings, emphasis, lists, quotes, web links and pictures, tables, code and dividers, each shown as the Markdown to type and the result. It points to the linking card for [[ ]] links.
+  - Codex › Rules Reference: "How to Link Entries". [[Name]] and [[Name|shown text]], typing [[ to pick an entry, DM clicks on a missing link create the entry, and links to SRD entries once the DM has loaded the SRD ([[srd:spells/fireball|Fireball]], and a plain [[Goblin]] when no campaign entry has that name). It links to the example village.
+  - Codex › Rules Reference: "Customising the Menus". Where the DM finds Settings › Navigation, and how to show or hide sections and subcategories, change their order, add subcategories and save.
+  - Atlas › Village: "Thornwick Hollow", a made-up fog-bound fishing village. The linking card links to it.
   - Personae › Party Contacts: "Old Maren Vosk", the village innkeeper, linked to and from the village.
   - Quests › Side Quests: "The Drowned Bell", a short quest that links the village, the innkeeper and a few SRD entries.
 - Upgrades never get it, and once deleted it does not come back, because it is only made when no campaign data exists at all. It is an ordinary campaign: a DM can edit its cards, copy them, or delete it.
 
 Notes
-- [[ ]] inside `inline code` or a ``` code block is now shown as typed instead of turning into a link, so a note can show link syntax (the cheat sheet does).
+- [[ ]] inside `inline code` or a ``` code block is now shown as typed instead of turning into a link, so a note can show link syntax (the linking card does).
 - Code blocks in notes no longer draw a shaded box behind each line.
 - Changed: server/lib/exampleCampaign.js (new), server/lib/initData.js, client NoteView.jsx (wikiToLinks skips code), styles.css (.note-content pre code), rebuilt client/dist; README.md; version 1.0.9.
 

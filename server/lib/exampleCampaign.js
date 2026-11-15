@@ -7,14 +7,14 @@ import { getNoteMarkdownPath, normalizeNoteData } from "./filesystem/notes.js";
 import { ensureDir } from "./fsdb.js";
 
 // v1.0.9: a fresh install starts with one example campaign holding a few example cards:
-// a Markdown and [[ ]] link cheat sheet, a made-up village it links to, a person who lives
+// a Markdown cheat sheet, a card on [[ ]] links, a card on changing the menus, a made-up village, a person who lives
 // there and a quest that ties them together. It is created only on a truly fresh install
 // (no campaigns.json and no campaign folders yet), so upgrades never get it and a DM who
 // deletes it never sees it come back.
 
 export const EXAMPLE_CAMPAIGN = { slug: "example-campaign", name: "Example Campaign" };
 
-const CHEAT_SHEET = `Welcome to BlackQuill! Every entry in your campaign is written in **Markdown**, a simple way to format text with ordinary characters. This card is a quick reference. Click **Edit** to see exactly how it was written, and feel free to change or delete it.
+const CHEAT_SHEET = `Welcome to BlackQuill! Every entry in your campaign is written in **Markdown**, a simple way to format text with ordinary characters. This card is a quick reference for formatting. Click **Edit** to see exactly how it was written, and feel free to change or delete it.
 
 ## Headings
 
@@ -85,27 +85,9 @@ Start a line with \`>\` for boxed text, a letter or a prophecy:
 
 ---
 
-## Linking entries with \`[[ ]]\`
+## Linking to other entries
 
-Put the name of another entry between double square brackets to link to it. Clicking the link opens that entry.
-
-- \`[[Thornwick Hollow]]\` links to the entry called Thornwick Hollow.
-- \`[[Thornwick Hollow|the village]]\` links to the same entry but shows *the village* as the text.
-- While editing, type \`[[\` and BlackQuill lists matching entries as you type. Pick one to insert the link.
-- Links match an entry's name, ignoring capital letters.
-- If you are the DM and you click a link to an entry that does not exist yet, BlackQuill creates it for you, ready to fill in. That is a quick way to sketch out a world: write the links first, then click them.
-
-Try it: this campaign's example village is [[Thornwick Hollow]]. From there you can follow links to [[Old Maren Vosk|the innkeeper]] and to the quest [[The Drowned Bell]].
-
-## Linking to the SRD
-
-Links also connect to the **SRD** (the D&D 5e System Reference Document) when the DM has loaded it from the SRD page in the sidebar.
-
-- Typing \`[[\` lists SRD spells, monsters, items, conditions and more alongside your campaign entries. Picking one inserts a link such as \`[[srd:spells/fireball|Fireball]]\`.
-- A plain link such as \`[[Goblin]]\` opens the SRD entry with exactly that name when no campaign entry has it.
-- A campaign entry always wins: if you write your own entry called Goblin, \`[[Goblin]]\` opens yours.
-
-For example: [[srd:spells/fireball|Fireball]], [[srd:monsters/goblin|goblin]] and [[srd:conditions/frightened|frightened]]. If the SRD has not been loaded yet, these links open the SRD page, where the DM can import it.
+Links between entries use double square brackets instead of Markdown's \`[text](address)\`. They have their own card: [[How to Link Entries]].
 
 ## Good to know
 
@@ -211,9 +193,74 @@ The Council of Nets offers 50 gp and free lodging for life at the Lantern & Eel.
 *Use this card as a pattern for your own quests, or delete it when you are ready to start your real campaign.*
 `;
 
+const LINKS = `Any entry can link to any other entry in the campaign, and to the SRD. Click a link to open what it points to. Click **Edit** on this card to see how each link below was written.
+
+## The basics
+
+Put the name of another entry between double square brackets:
+
+- \`[[Thornwick Hollow]]\` links to the entry called Thornwick Hollow: [[Thornwick Hollow]]
+- \`[[Thornwick Hollow|the village]]\` links to the same entry but shows different text: [[Thornwick Hollow|the village]]
+
+Links match an entry's name, ignoring capital letters, so \`[[thornwick hollow]]\` works too.
+
+## Picking from a list
+
+While editing, type \`[[\` and BlackQuill lists the entries that match what you type next. Use the arrow keys or the mouse to pick one, and the whole link is filled in for you.
+
+## Linking to entries that do not exist yet
+
+If you are the DM and you click a link to an entry that does not exist yet, BlackQuill creates it for you, ready to fill in. That is a quick way to sketch out a world: write the links first, then click them to make the entries.
+
+## Linking to the SRD
+
+Links also connect to the **SRD** (the D&D 5e System Reference Document) once the DM has loaded it from the **SRD** page in the sidebar.
+
+- Typing \`[[\` lists SRD spells, monsters, items, conditions and more alongside your campaign entries. Picking one inserts a link such as \`[[srd:spells/fireball|Fireball]]\`.
+- A plain link such as \`[[Goblin]]\` opens the SRD entry with exactly that name when no campaign entry has it.
+- A campaign entry always wins: if you write your own entry called Goblin, \`[[Goblin]]\` opens yours.
+
+For example: [[srd:spells/fireball|Fireball]], [[srd:monsters/goblin|goblin]] and [[srd:conditions/frightened|frightened]]. If the SRD has not been loaded yet, these links open the SRD page, where the DM can import it.
+
+## Try it
+
+This campaign's example village is [[Thornwick Hollow]]. From there you can follow links to [[Old Maren Vosk|the innkeeper]] and to the quest [[The Drowned Bell]].
+
+## Showing a link without making one
+
+Inside backticks, \`[[ ]]\` is shown as typed instead of becoming a link. That is how this card shows the examples above.
+`;
+
+const MENUS = `The sections in the sidebar (Atlas, Personae, Quests and the rest) and the subcategories under them are not fixed. The DM can switch them on or off, change their order and add new subcategories, so the ledger fits the way your table plays.
+
+## Where to find it
+
+1. Sign in as the DM.
+2. Open **Settings** at the bottom of the sidebar.
+3. Choose the **Navigation** tab.
+
+Players do not see this tab.
+
+## What you can change
+
+- **Show or hide a section or subcategory:** tick or untick its box. Hiding a section hides everything under it. Ticking a subcategory turns its section back on.
+- **Change the order:** drag a section or subcategory to a new place, or use its **↑** and **↓** buttons. Subcategories move within their own section.
+- **Add a subcategory:** pick the section, type a name (for example *Settlement* under Atlas or *Rivals* under Personae) and click **Add**.
+
+Click **Save Navigation** when you are done. The sidebar, and the section lists in **New Entry** and **Edit**, then show only the items that are switched on, in your order.
+
+## Good to know
+
+- Dashboard and All Entries always stay at the top.
+- Hiding a section does not delete anything. Its entries stay on disk and come back when you switch it on again.
+- The menus are shared by every campaign on this BlackQuill.
+`;
+
 // Category and subcategory are menu labels from the default navigation (lib/navigation.js).
 const EXAMPLE_NOTES = [
-  { title: "Markdown and Links Cheat Sheet", slug: "markdown-and-links-cheat-sheet", category: "Codex", subcategory: "Rules Reference", tags: ["example", "help"], content: CHEAT_SHEET },
+  { title: "Markdown Cheat Sheet", slug: "markdown-cheat-sheet", category: "Codex", subcategory: "Rules Reference", tags: ["example", "help"], content: CHEAT_SHEET },
+  { title: "How to Link Entries", slug: "how-to-link-entries", category: "Codex", subcategory: "Rules Reference", tags: ["example", "help"], content: LINKS },
+  { title: "Customising the Menus", slug: "customising-the-menus", category: "Codex", subcategory: "Rules Reference", tags: ["example", "help"], content: MENUS },
   { title: "Thornwick Hollow", slug: "thornwick-hollow", category: "Atlas", subcategory: "Village", locationLevel: "Village", tags: ["example", "mirefen"], content: VILLAGE },
   { title: "Old Maren Vosk", slug: "old-maren-vosk", category: "Personae", subcategory: "Party Contacts", tags: ["example", "thornwick-hollow"], parentSlug: "thornwick-hollow", content: INNKEEPER },
   { title: "The Drowned Bell", slug: "the-drowned-bell", category: "Quests", subcategory: "Side Quests", tags: ["example", "thornwick-hollow"], parentSlug: "thornwick-hollow", content: QUEST }

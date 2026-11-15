@@ -122,7 +122,7 @@ function ensureDefaults() {
   ensureFile(PATHS.campaignsFile, "[]");
   if (fresh) {
     createExampleCampaign();
-    console.log(`✔ Created "${EXAMPLE_CAMPAIGN.name}" with example cards (a Markdown and links cheat sheet, a village, an NPC and a quest)`);
+    console.log(`✔ Created "${EXAMPLE_CAMPAIGN.name}" with example cards (Markdown cheat sheet, linking, menus, a village, an NPC and a quest)`);
   }
   ensureFile(PATHS.settingsFile, JSON.stringify(DEFAULT_SETTINGS, null, 2));
   // v0.87: no default login text (the banner already names the app). An untouched
