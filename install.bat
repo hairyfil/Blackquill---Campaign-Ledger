@@ -4,7 +4,7 @@ cd /d "%~dp0"
 set "SCRIPT_NAME=%~nx0"
 
 echo =====================================
-echo BlackQuill v1.0.8 install
+echo BlackQuill v1.0.9 install
 echo =====================================
 
 call :checknode
@@ -28,7 +28,7 @@ exit /b 0
 
 :nodist
 echo.
-echo The built app (client\dist) is missing. Download the full BlackQuill v1.0.8 package again.
+echo The built app (client\dist) is missing. Download the full BlackQuill v1.0.9 package again.
 pause
 exit /b 1
 

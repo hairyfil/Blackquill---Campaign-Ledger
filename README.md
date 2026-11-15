@@ -4,7 +4,7 @@
 
 BlackQuill gives the DM and players one place to keep the world, the people in it, the factions, quests, loot and session logs. It runs on your own computer or server, needs no database, and stores every note as a plain Markdown file you own.
 
-![Version](https://img.shields.io/badge/version-1.0.8-b8860b)
+![Version](https://img.shields.io/badge/version-1.0.9-b8860b)
 ![Node](https://img.shields.io/badge/node-%3E%3D22.12-339933)
 ![License](https://img.shields.io/badge/license-MIT-blue)
 [![Buy Me a Coffee](https://img.shields.io/badge/Buy%20Me%20a%20Coffee-ffdd00?logo=buymeacoffee&logoColor=black)](https://www.buymeacoffee.com/blackquill)
@@ -24,6 +24,7 @@ BlackQuill gives the DM and players one place to keep the world, the people in i
 - Search across the whole campaign.
 
 ### Notes and linking
+- **Example campaign on first start:** a fresh install comes with an "Example Campaign" holding a Markdown and links cheat sheet, a made-up village, an innkeeper who lives there and a quest that ties them together. Read them, edit them, or delete the campaign when you are ready.
 - Every entry is Markdown, shown on a parchment-style reader page.
 - **Wiki links:** type `[[` in a note and pick from matching campaign notes and SRD entries. Links look like `[[Note Title]]` or `[[Note Title|shown text]]`.
 - A DM can click a link to a note that does not exist yet to create it.

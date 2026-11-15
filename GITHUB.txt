@@ -4,7 +4,7 @@ You only do part A once. Part B is what you do for each new version.
 
 A. FIRST TIME
 1. Install GitHub Desktop from https://desktop.github.com and sign in with your GitHub account.
-2. Unzip the BlackQuill zip (for example blackquill-v1.0.8.zip). Move the folder somewhere permanent and rename it to just "blackquill"
+2. Unzip the BlackQuill zip (for example blackquill-v1.0.9.zip). Move the folder somewhere permanent and rename it to just "blackquill"
    (for example C:\Users\<you>\Documents\GitHub\blackquill). This folder is now your repository folder.
 3. In GitHub Desktop: File > Add local repository > choose the blackquill folder.
    It will say "this directory does not appear to be a Git repository": click "create a repository".
@@ -31,7 +31,7 @@ First time, after creating an empty repository called blackquill on github.com (
     cd C:\path\to\blackquill
     git init -b main
     git add .
-    git commit -m "BlackQuill v1.0.8"
+    git commit -m "BlackQuill v1.0.9"
     git remote add origin https://github.com/<your-username>/blackquill.git
     git push -u origin main
 Each new version, after step B2-B3 above:
