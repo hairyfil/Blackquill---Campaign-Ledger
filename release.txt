@@ -1,3 +1,15 @@
+v1.0.10
+==================================
+BlackQuill's licence changes from MIT to the PolyForm Noncommercial License 1.0.0.
+
+Licence
+- LICENSE is now the official PolyForm Noncommercial License 1.0.0 text, with the Required Notice "Copyright 2026 Phil Davidson (BlackQuill Campaign Ledger, ...)" at the top. Anyone may use, copy, change and share BlackQuill for noncommercial purposes (personal games, clubs, schools, charities). Selling it, charging for hosting it, or using it in a commercial product or service needs Phil Davidson's permission.
+- Versions up to v1.0.9 were released under MIT, and copies of those stay under MIT. The new licence applies from v1.0.10.
+- package.json, client/package.json and both package-lock.json files say "license": "PolyForm-Noncommercial-1.0.0" (was "MIT").
+- The notice on the login page, the first-time setup page and in the Admin Console now reads "© 2026 Phil Davidson. PolyForm Noncommercial 1.0.0." (was "MIT License.").
+- README.md: licence badge and Licence section rewritten to match.
+- Changed: LICENSE, package.json, client/package.json, both package-lock.json, client/src/utils/copyright.js, rebuilt client/dist, README.md; version 1.0.10.
+
 v1.0.9
 ==================================
 A fresh install now starts with an example campaign, so new users have something to read and copy.
