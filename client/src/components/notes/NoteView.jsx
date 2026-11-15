@@ -5,8 +5,20 @@ const md = new MarkdownIt({ html: true, linkify: true });
 
 const escapeHtml = (v) => String(v).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 
+// v1.0.9: code blocks (``` or ~~~) and inline `code` are left alone, so a note can show the
+// [[ ]] syntax itself (the Markdown cheat sheet does) instead of turning it into a link.
+const CODE_PARTS = /(^[ \t]*(```|~~~)[^\n]*\n[\s\S]*?^[ \t]*\2[^\n]*$|`[^`\n]+`)/gm;
+
 // [[Note Title]], [[Note Title|label]] and (v0.85.1) [[srd:<category>/<index>|label]].
 function wikiToLinks(content = '') {
+  return String(content).split(CODE_PARTS).map((part, i) => {
+    // split() returns: text, code, fence marker, text, code, fence marker, ...
+    if (i % 3 === 0) return wikiToLinksInText(part);
+    return i % 3 === 1 ? part : '';
+  }).join('');
+}
+
+function wikiToLinksInText(content = '') {
   return content.replace(/\[\[([^\]|]+)(?:\|([^\]]+))?\]\]/g, (_match, target, label) => {
     const rawTarget = String(target || '').trim();
     const srd = /^srd:([a-z0-9-]+)\/([a-z0-9-]+)$/i.exec(rawTarget);

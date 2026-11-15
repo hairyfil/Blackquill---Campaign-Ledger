@@ -6,6 +6,7 @@ import { ensureDir, ensureFile } from "./fsdb.js";
 import { isDebugEnabled } from "./debug.js";
 import { hasAdminAccount, createAdminAccount, ensureDemoAccount, DEMO_USERNAME, MIN_ADMIN_PASSWORD } from "./users.js";
 import { DEFAULT_SETTINGS } from "./settings.js";
+import { isFreshInstall, createExampleCampaign, EXAMPLE_CAMPAIGN } from "./exampleCampaign.js";
 
 const DEFAULT_STYLE = {
   name: "Default",
@@ -115,8 +116,14 @@ function replaceIfUntouched(file, oldContent, newContent) {
 // Safe initialization: create only missing folders/files. Never overwrite user data
 // (untouched copies of older default banners and the old login text are updated).
 function ensureDefaults() {
+  // v1.0.9: checked before campaigns.json is created below, so only a brand-new install qualifies.
+  const fresh = isFreshInstall();
   for (const dir of [PATHS.campaigns, PATHS.defaultTemplate, PATHS.styles, PATHS.defaultIcons, PATHS.banners, PATHS.backups, PATHS.datasets]) ensureDir(dir);
   ensureFile(PATHS.campaignsFile, "[]");
+  if (fresh) {
+    createExampleCampaign();
+    console.log(`✔ Created "${EXAMPLE_CAMPAIGN.name}" with example cards (a Markdown and links cheat sheet, a village, an NPC and a quest)`);
+  }
   ensureFile(PATHS.settingsFile, JSON.stringify(DEFAULT_SETTINGS, null, 2));
   // v0.87: no default login text (the banner already names the app). An untouched
   // v0.86-or-earlier default is cleared; text a DM wrote is never changed.

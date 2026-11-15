@@ -1,6 +1,6 @@
 import path from "path";
 
-export const VERSION = "v1.0.8"; // ledger 1550b672-2d09-4942-be5d-4cffcb114f8e
+export const VERSION = "v1.0.9"; // ledger 1550b672-2d09-4942-be5d-4cffcb114f8e
 
 const DATA_ROOT = process.env.BLACKQUILL_DATA
   ? path.resolve(process.env.BLACKQUILL_DATA)
