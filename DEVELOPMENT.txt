@@ -1,4 +1,4 @@
-BlackQuill v1.0.9 - source and development notes
+BlackQuill v1.0.10 - source and development notes
 
 This folder is the complete project: the server (server/), the client source (client/src, client/index.html), the built client (client/dist), the install and run scripts, and the docs. It is also what goes in the GitHub repository.
 

@@ -4,9 +4,9 @@
 
 BlackQuill gives the DM and players one place to keep the world, the people in it, the factions, quests, loot and session logs. It runs on your own computer or server, needs no database, and stores every note as a plain Markdown file you own.
 
-![Version](https://img.shields.io/badge/version-1.0.9-b8860b)
+![Version](https://img.shields.io/badge/version-1.0.10-b8860b)
 ![Node](https://img.shields.io/badge/node-%3E%3D22.12-339933)
-![License](https://img.shields.io/badge/license-MIT-blue)
+![License](https://img.shields.io/badge/license-PolyForm%20Noncommercial%201.0.0-blue)
 [![Buy Me a Coffee](https://img.shields.io/badge/Buy%20Me%20a%20Coffee-ffdd00?logo=buymeacoffee&logoColor=black)](https://www.buymeacoffee.com/blackquill)
 
 ---
@@ -188,7 +188,11 @@ For live reloading, run the BlackQuill server on port 3001 and then `npm run dev
 
 ## Licence
 
-BlackQuill is released under the [MIT License](LICENSE). Copyright (c) 2026 Phil Davidson.
+BlackQuill is released under the [PolyForm Noncommercial License 1.0.0](LICENSE). Copyright 2026 Phil Davidson.
+
+In short: you may use, copy, change and share BlackQuill for any noncommercial purpose, such as running your own games, a club, a school or a charity. You may not sell it, charge for hosting it, or use it in a commercial product or service without the copyright holder's permission. Anyone you share it with must get the licence terms and the Required Notice line at the top of `LICENSE`. For commercial use, contact Phil Davidson.
+
+Versions up to v1.0.9 were published under the MIT License, and copies of those versions stay under MIT. The PolyForm licence applies from v1.0.10.
 
 The campaign notes and pictures you create are yours. Third-party material keeps its own licence:
 
