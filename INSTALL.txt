@@ -1,4 +1,4 @@
-BlackQuill Campaign Ledger v1.0.10 - Install and Run
+BlackQuill Campaign Ledger v1.1 - Install and Run
 ====================================================
 
 Windows

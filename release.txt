@@ -1,14 +1,19 @@
-v1.0.10
+v1.1
 ==================================
-BlackQuill's licence changes from MIT to the PolyForm Noncommercial License 1.0.0.
+Version 1.1 brings together the example campaign from v1.0.9 and a new licence: BlackQuill moves from MIT to the PolyForm Noncommercial License 1.0.0.
+
+Highlights
+- A fresh install starts with "Example Campaign": a Markdown cheat sheet, a guide to [[ ]] links (including SRD links), a guide to changing the menus in Settings › Navigation, a made-up village, an innkeeper and a quest. See v1.0.9 below for details.
+- [[ ]] inside code is shown as typed instead of becoming a link.
+- New licence, below.
 
 Licence
 - LICENSE is now the official PolyForm Noncommercial License 1.0.0 text, with the Required Notice "Copyright 2026 Phil Davidson (BlackQuill Campaign Ledger, ...)" at the top. Anyone may use, copy, change and share BlackQuill for noncommercial purposes (personal games, clubs, schools, charities). Selling it, charging for hosting it, or using it in a commercial product or service needs Phil Davidson's permission.
-- Versions up to v1.0.9 were released under MIT, and copies of those stay under MIT. The new licence applies from v1.0.10.
+- Versions up to v1.0.9 were released under MIT, and copies of those stay under MIT. The new licence applies from v1.1 (it was prepared as v1.0.10, which was never released).
 - package.json, client/package.json and both package-lock.json files say "license": "PolyForm-Noncommercial-1.0.0" (was "MIT").
 - The notice on the login page, the first-time setup page and in the Admin Console now reads "© 2026 Phil Davidson. PolyForm Noncommercial 1.0.0." (was "MIT License.").
 - README.md: licence badge and Licence section rewritten to match.
-- Changed: LICENSE, package.json, client/package.json, both package-lock.json, client/src/utils/copyright.js, rebuilt client/dist, README.md; version 1.0.10.
+- Changed: LICENSE, package.json, client/package.json, both package-lock.json, client/src/utils/copyright.js, rebuilt client/dist, README.md; version 1.1 (package version 1.1.0).
 
 v1.0.9
 ==================================

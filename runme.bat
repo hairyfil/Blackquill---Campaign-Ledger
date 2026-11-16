@@ -4,7 +4,7 @@ cd /d "%~dp0"
 set "SCRIPT_NAME=%~nx0"
 
 echo =====================================
-echo BlackQuill v1.0.9
+echo BlackQuill v1.1
 echo =====================================
 
 call :checknode
