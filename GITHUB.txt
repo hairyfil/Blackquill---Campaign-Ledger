@@ -4,7 +4,7 @@ You only do part A once. Part B is what you do for each new version.
 
 A. FIRST TIME
 1. Install GitHub Desktop from https://desktop.github.com and sign in with your GitHub account.
-2. Unzip the BlackQuill zip (for example blackquill-v1.0.10.zip). Move the folder somewhere permanent and rename it to just "blackquill"
+2. Unzip the BlackQuill zip (for example blackquill-v1.1.zip). Move the folder somewhere permanent and rename it to just "blackquill"
    (for example C:\Users\<you>\Documents\GitHub\blackquill). This folder is now your repository folder.
 3. In GitHub Desktop: File > Add local repository > choose the blackquill folder.
    It will say "this directory does not appear to be a Git repository": click "create a repository".
@@ -12,7 +12,7 @@ A. FIRST TIME
 4. Click "Publish repository". Keep "Keep this code private" ticked unless you want it public. Click Publish.
    Your code is now on github.com under your account.
 
-B. EACH NEW VERSION (for example v1.0.10)
+B. EACH NEW VERSION (for example v1.1)
 1. Unzip the new zip somewhere temporary.
 2. Open your blackquill repository folder. Delete everything in it EXCEPT the hidden .git folder
    (in Explorer, turn on View > Show > Hidden items so you can see it, and leave it alone).
